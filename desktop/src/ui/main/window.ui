@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>463</width>
+    <height>369</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Soundbot</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	padding: 4px;
+	background-color: transparent;
+	border-radius: 8px;
+}
+
+QPushButton:hover {
+	background-color: #ccc;
+	color: white;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>16</number>
+    </property>
+    <property name="topMargin">
+     <number>8</number>
+    </property>
+    <property name="rightMargin">
+     <number>16</number>
+    </property>
+    <property name="bottomMargin">
+     <number>16</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="qr_code_label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>463</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuArquivo">
+    <property name="title">
+     <string>Arquivo</string>
+    </property>
+    <widget class="QMenu" name="menuConfigura_es">
+     <property name="title">
+      <string>Configurações</string>
+     </property>
+     <addaction name="action_projector_settings"/>
+     <addaction name="action_theme_settings"/>
+    </widget>
+    <addaction name="separator"/>
+    <addaction name="menuConfigura_es"/>
+    <addaction name="separator"/>
+    <addaction name="action_quit"/>
+   </widget>
+   <addaction name="menuArquivo"/>
+  </widget>
+  <action name="actionSair">
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>Sobre</string>
+   </property>
+  </action>
+  <action name="actionVerificar_se_h_atualiza_es">
+   <property name="text">
+    <string>Verificar se há atualizações</string>
+   </property>
+  </action>
+  <action name="action_quit">
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
+  <action name="action_export_history">
+   <property name="text">
+    <string>Exportar histórico</string>
+   </property>
+  </action>
+  <action name="action_advanced_search">
+   <property name="text">
+    <string>Pesquisa avançada</string>
+   </property>
+  </action>
+  <action name="action_install_version">
+   <property name="text">
+    <string>Instalar versão</string>
+   </property>
+  </action>
+  <action name="action_remote">
+   <property name="text">
+    <string>Controle remoto</string>
+   </property>
+  </action>
+  <action name="action_projector_settings">
+   <property name="text">
+    <string>Projeção</string>
+   </property>
+  </action>
+  <action name="action_theme_settings">
+   <property name="text">
+    <string>Temas</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
