@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 
@@ -25,6 +26,7 @@ def main():
     theme_settings.add_settings_listener(lambda: configure_app_theme(app))
 
     main_window = MainWindow()
+    main_window.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
     main_window.show()
 
     splash_screen.close()
