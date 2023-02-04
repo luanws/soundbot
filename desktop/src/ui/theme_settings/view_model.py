@@ -1,7 +1,7 @@
 from typing import List
 
 from src.utils import styles
-from src.utils.settings.theme_settings import ThemeSettings
+from src.settings.theme_settings import ThemeSettings
 
 
 class ThemeSettingsViewModel:

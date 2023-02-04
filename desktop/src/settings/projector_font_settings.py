@@ -1,4 +1,4 @@
-from src.utils.settings import Settings
+from . import Settings
 
 
 class ProjectorFontSettings(Settings):

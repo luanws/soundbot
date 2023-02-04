@@ -2,7 +2,7 @@ from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QColorDialog, QMainWindow
 
 from src.ui.projector_settings.window import Ui_MainWindow
-from src.utils.settings.projector_font_settings import ProjectorFontSettings
+from src.settings.projector_font_settings import ProjectorFontSettings
 
 
 def q_color_to_hex(color: QtGui.QColor) -> str:

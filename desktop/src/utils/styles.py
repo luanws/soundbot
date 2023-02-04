@@ -4,7 +4,7 @@ import re
 from contextlib import suppress
 from typing import Dict, List
 
-from src.utils.settings.theme_settings import ThemeSettings
+from src.settings.theme_settings import ThemeSettings
 
 qss_dict: Dict[str, str] = {}
 qss_vars: Dict[str, str] = {}

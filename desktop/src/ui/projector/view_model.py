@@ -1,6 +1,6 @@
 from typing import Callable, Optional
 
-from src.utils.settings.projector_font_settings import ProjectorFontSettings
+from src.settings.projector_font_settings import ProjectorFontSettings
 
 
 class ProjectorViewModel:
