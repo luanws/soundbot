@@ -7,6 +7,7 @@ from src.ui.main.window import Ui_MainWindow
 from src.ui.projector import ProjectorWindow
 from src.ui.projector_settings import ProjectorSettingsWindow
 from src.ui.theme_settings import ThemeSettingsWindow
+from src.ui.video_path_settings import VideoPathSettingsWindow
 from src.utils import qrcode
 
 
@@ -23,21 +24,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.projector_settings_window = ProjectorSettingsWindow()
         self.theme_settings_window = ThemeSettingsWindow()
+        self.video_path_settings_window = VideoPathSettingsWindow()
         self.projector_window = ProjectorWindow()
+
         self.main_window_control = ApplicationController(self, self.projector_window)
 
         screen = QDesktopWidget().screenGeometry(2)
         self.projector_window.move(screen.left(), screen.top())
 
-        self.action_projector_settings.triggered.connect(self.show_projector_settings)
-        self.action_theme_settings.triggered.connect(self.show_themes)
+        self.action_projector_settings.triggered.connect(self.projector_settings_window.show)
+        self.action_theme_settings.triggered.connect(self.theme_settings_window.show)
+        self.action_video_path_settings.triggered.connect(self.video_path_settings_window.show)
         self.action_quit.triggered.connect(self.close)
-
-    def show_projector_settings(self):
-        self.projector_settings_window.show()
-
-    def show_themes(self):
-        self.theme_settings_window.show()
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         api_address = self.main_window_control.start_api()
