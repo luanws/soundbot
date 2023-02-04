@@ -1,12 +1,12 @@
 from typing import TYPE_CHECKING
 
-
-from src.utils.remote import Command
-from src.utils.remote.remote_api import RemoteAPI
+from src.utils.remote.command import Command
 
 if TYPE_CHECKING:
     from src.ui.main import MainWindow
     from src.ui.projector import ProjectorWindow
+
+from src.utils.remote.remote_controls import get_remote_api
 
 from .projector import ProjectorController
 
@@ -22,7 +22,7 @@ class ApplicationController:
 
         self.projector_controller = ProjectorController(self.projector_window)
 
-        self.remote_api = RemoteAPI(prefix_length=40)
+        self.remote_api = get_remote_api()
 
         commands = [
             (Command.SHOW_TEXT, self.projector_controller.show_text),

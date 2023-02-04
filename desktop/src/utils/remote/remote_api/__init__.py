@@ -1,9 +1,10 @@
 from typing import Optional
 
 from flask import Flask
+
+from src.api import api_routes_blueprint
 from src.utils.remote import Remote
 
-from . import routes
 from .server import Server
 from .server_address import ServerAddress
 
@@ -45,8 +46,7 @@ class RemoteAPI(Remote):
             print('Server stopped')
 
     def configure_routes(self) -> None:
-        routes.execute = self.execute
         self.__app.register_blueprint(
-            routes.api_routes_blueprint,
+            api_routes_blueprint,
             url_prefix=f'/{self.__server_address.prefix}'
         )
