@@ -1,5 +1,5 @@
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict
 
 from PyQt5.QtWidgets import QApplication
 
@@ -19,11 +19,11 @@ class ProjectorController:
         self.projector_window.windowHandle().setScreen(screen)
         self.projector_window.showFullScreen()
 
-    def show_text(self, data: dict) -> str:
+    def show_text(self, data: Dict[str, Any]) -> str:
         text = data['text']
         self.open_projector_in_last_screen()
         self.projector_window.text = text
         return text
 
-    def close_projector(self):
+    def close_projector(self, data: Dict[str, Any]):
         self.projector_window.close()

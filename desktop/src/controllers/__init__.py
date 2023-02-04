@@ -26,6 +26,7 @@ class ApplicationController:
 
         commands = [
             (Command.SHOW_TEXT, self.projector_controller.show_text),
+            (Command.HIDE_TEXT, self.projector_controller.close_projector),
         ]
 
         for command, callback in commands:
