@@ -1,8 +1,8 @@
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
-from src.settings.video_path_settings import VideoPathSettings
 from src.ui.video_path_settings.window import Ui_MainWindow
+from src.utils.settings.video_path_settings import VideoPathSettings
 
 from .widgets.video_path import VideoPathWidget
 

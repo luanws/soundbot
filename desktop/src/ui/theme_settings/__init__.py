@@ -3,9 +3,9 @@ from typing import List
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
-from src.settings.theme_settings import ThemeSettings
 from src.ui.theme_settings.window import Ui_MainWindow
 from src.utils import styles
+from src.utils.settings.theme_settings import ThemeSettings
 
 
 class ThemeSettingsWindow(QMainWindow, Ui_MainWindow):

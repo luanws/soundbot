@@ -1,6 +1,5 @@
+from src.utils.settings import Settings
 from src.utils import styles
-
-from . import Settings
 
 
 class ThemeSettings(Settings):
