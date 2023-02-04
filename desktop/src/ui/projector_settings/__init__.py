@@ -41,10 +41,10 @@ class ProjectorSettingsWindow(QMainWindow, Ui_MainWindow):
         self.preview_label.mousePressEvent = self.on_click_preview_label
 
     def configure_start_values(self):
-        font_size = self.__view_model.projector_font_settings.font_size
-        font_family = self.__view_model.projector_font_settings.font_family
-        margin = self.__view_model.projector_font_settings.margin
-        color = self.__view_model.projector_font_settings.color
+        font_size = self.__projector_font_settings.font_size
+        font_family = self.__projector_font_settings.font_family
+        margin = self.__projector_font_settings.margin
+        color = self.__projector_font_settings.color
         self.font_size_spin_box.setValue(font_size)
         self.font_family_combo_box.setCurrentText(font_family)
         self.margin_spin_box.setValue(margin)
@@ -76,13 +76,13 @@ class ProjectorSettingsWindow(QMainWindow, Ui_MainWindow):
             "",
             "Imagens (*.png *.jpg *.jpeg *.bmp *.gif)"
         )
-        self.__view_model.projector_font_settings.background_image_path = file_path
+        self.__projector_font_settings.background_image_path = file_path
         self.update_preview_label()
 
     def on_click_change_color_button(self):
         q_color = QColorDialog.getColor()
         color = q_color_to_hex(q_color)
-        self.__view_model.projector_font_settings.color = color
+        self.__projector_font_settings.color = color
         self.change_color_button.setStyleSheet(f"""
             border-style: solid;
             border-radius: 2px;
@@ -100,15 +100,15 @@ class ProjectorSettingsWindow(QMainWindow, Ui_MainWindow):
 
     def on_change_font_size(self):
         font_size = self.font_size_spin_box.value()
-        self.__view_model.projector_font_settings.font_size = font_size
+        self.__projector_font_settings.font_size = font_size
         self.update_preview_label()
 
     def on_change_font_family(self):
         font_family = self.font_family_combo_box.currentText()
-        self.__view_model.projector_font_settings.font_family = font_family
+        self.__projector_font_settings.font_family = font_family
         self.update_preview_label()
 
     def on_change_margin(self):
         margin = self.margin_spin_box.value()
-        self.__view_model.projector_font_settings.margin = margin
+        self.__projector_font_settings.margin = margin
         self.update_preview_label()
