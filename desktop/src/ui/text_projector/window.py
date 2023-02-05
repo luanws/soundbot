@@ -29,5 +29,5 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Projector"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Text projector"))
         self.text_label.setText(_translate("MainWindow", "Texto"))

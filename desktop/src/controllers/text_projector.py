@@ -4,13 +4,13 @@ from typing import TYPE_CHECKING, Any, Dict
 from PyQt5.QtWidgets import QApplication
 
 if TYPE_CHECKING:
-    from src.ui.projector import ProjectorWindow
+    from src.ui.text_projector import TextProjectorWindow
 
 
-class ProjectorController:
-    projector_window: 'ProjectorWindow'
+class TextProjectorController:
+    projector_window: 'TextProjectorWindow'
 
-    def __init__(self, projector_window: 'ProjectorWindow') -> None:
+    def __init__(self, projector_window: 'TextProjectorWindow') -> None:
         self.projector_window = projector_window
 
     def open_projector_in_last_screen(self) -> None:

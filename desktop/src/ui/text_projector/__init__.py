@@ -1,11 +1,11 @@
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QMainWindow
 
-from src.ui.projector.window import Ui_MainWindow
+from src.ui.text_projector.window import Ui_MainWindow
 from src.utils.settings.projector_font_settings import ProjectorFontSettings
 
 
-class ProjectorWindow(QMainWindow, Ui_MainWindow):
+class TextProjectorWindow(QMainWindow, Ui_MainWindow):
     font_settings: ProjectorFontSettings
     __text: str
 
