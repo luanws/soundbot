@@ -3,6 +3,9 @@ from flask_restful import Api
 from werkzeug.utils import send_from_directory
 
 from .command import CommandResource
+from .hymns import HymnsResource
+from .songs import SongsResource
+from .taste_and_see import TasteAndSeeResource
 
 api_routes_blueprint = Blueprint('api_routes', __name__)
 api = Api(api_routes_blueprint)
@@ -21,3 +24,6 @@ def favicon():
 
 
 api.add_resource(CommandResource, '/command/<command>')
+api.add_resource(HymnsResource, '/hymns')
+api.add_resource(SongsResource, '/songs')
+api.add_resource(TasteAndSeeResource, '/taste_and_see')

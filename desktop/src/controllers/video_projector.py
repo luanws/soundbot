@@ -14,11 +14,8 @@ class VideoProjectorController:
         self.video_projector_window = video_projector_window
         self.video_path_settings = VideoPathSettings()
 
-    def get_path_from_video_type(self, video_type: str) -> str:
-        return self.video_path_settings.to_dict()[video_type]
-
     def make_video_path(self, video_type: str, filename: str) -> str:
-        path = self.get_path_from_video_type(video_type)
+        path = self.video_path_settings.get_path_from_video_type(video_type)
         if video_type == 'offertory':
             return path
         return f'{path}/{filename}'
