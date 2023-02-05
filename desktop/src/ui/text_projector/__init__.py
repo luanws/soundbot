@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from src.ui.text_projector.window import Ui_MainWindow
 from src.utils.settings.projector_font_settings import ProjectorFontSettings
@@ -34,6 +34,12 @@ class TextProjectorWindow(QMainWindow, Ui_MainWindow):
 
     def close(self) -> bool:
         return super().close()
+
+    def show_in_last_screen(self) -> None:
+        screen = QApplication.screens()[-1]
+        self.show()
+        self.windowHandle().setScreen(screen)
+        self.showFullScreen()
 
     def show(self) -> None:
         self.text_label.setText(self.text)

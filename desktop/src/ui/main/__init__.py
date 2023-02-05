@@ -4,10 +4,11 @@ from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
 
 from src.controllers import ApplicationController
 from src.ui.main.window import Ui_MainWindow
-from src.ui.text_projector import TextProjectorWindow
 from src.ui.projector_settings import ProjectorSettingsWindow
+from src.ui.text_projector import TextProjectorWindow
 from src.ui.theme_settings import ThemeSettingsWindow
 from src.ui.video_path_settings import VideoPathSettingsWindow
+from src.ui.video_projector import VideoProjectorWindow
 from src.utils import qrcode
 
 
@@ -25,12 +26,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.projector_settings_window = ProjectorSettingsWindow()
         self.theme_settings_window = ThemeSettingsWindow()
         self.video_path_settings_window = VideoPathSettingsWindow()
-        self.projector_window = TextProjectorWindow()
+        self.text_projector_window = TextProjectorWindow()
+        self.video_projector_window = VideoProjectorWindow()
 
-        self.main_window_control = ApplicationController(self, self.projector_window)
+        self.main_window_control = ApplicationController(self.text_projector_window, self.video_projector_window)
 
         screen = QDesktopWidget().screenGeometry(2)
-        self.projector_window.move(screen.left(), screen.top())
+        self.text_projector_window.move(screen.left(), screen.top())
+        self.video_projector_window.move(screen.left(), screen.top())
 
         self.action_projector_settings.triggered.connect(self.projector_settings_window.show)
         self.action_theme_settings.triggered.connect(self.theme_settings_window.show)
