@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
-from src.controllers.video_projector import VideoProjectorController
 from src.utils.remote.command import Command
 from src.utils.remote.remote_controls import get_remote_api
 
 from .text_projector import TextProjectorController
+from .video_projector import VideoProjectorController
 
 if TYPE_CHECKING:
     from src.ui.text_projector import TextProjectorWindow
