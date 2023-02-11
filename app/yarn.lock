@@ -1060,6 +1060,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@bacons/expo-background-color@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@bacons/expo-background-color/-/expo-background-color-1.0.2.tgz#6e8929203cf6cccd6bc044146477b9cdb0433724"
+  integrity sha512-I7797crohIdu/2Vt8kN7Vf4c6xCoASczeIA1oTd4JLUYiMhmzm0ocwEVXrNzXjwwbHHeuF+OOkLM8qSQC4lxoA==
+
 "@expo/bunyan@4.0.0", "@expo/bunyan@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@expo/bunyan/-/bunyan-4.0.0.tgz#be0c1de943c7987a9fbd309ea0b1acd605890c7b"
@@ -3167,6 +3172,14 @@ expo-structured-headers@~3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-3.0.1.tgz#291596c61acd2a45839ad6c6798c3d5cfc1eb4e9"
   integrity sha512-x6hkzuQL5HJoyB+xQyBf9M04ZUmrjFWqEW7gzIYWN/6LA+dgyaV4fF6U9++Re+GgGjF03vHJFqR1xYaosKKZYQ==
+
+expo-system-ui@~2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/expo-system-ui/-/expo-system-ui-2.0.1.tgz#5c15f3a6c309b2837c82c225d9e6f9aa2cc452ef"
+  integrity sha512-lspSKU71G2+6y3kI/p/sZUFSBvzd5HdnKuSX0J6b4yqOEAhMIA4JtmkU/0as1FY1Fnz+48fLs2ZL9gzbr7+njA==
+  dependencies:
+    "@react-native/normalize-color" "^2.0.0"
+    debug "^4.3.2"
 
 expo-updates-interface@~0.8.0:
   version "0.8.1"

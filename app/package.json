@@ -11,8 +11,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@bacons/expo-background-color": "^1.0.2",
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
+    "expo-system-ui": "~2.0.1",
     "expo-updates": "~0.15.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
