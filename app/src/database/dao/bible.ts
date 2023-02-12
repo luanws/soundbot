@@ -13,7 +13,7 @@ export namespace BibleDAO {
         })
     }
 
-    export async function get(version: string): Promise<Bible> {
+    export async function getBible(version: string): Promise<Bible> {
         return new Promise<Bible>((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
