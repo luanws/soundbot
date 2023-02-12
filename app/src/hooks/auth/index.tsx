@@ -1,4 +1,5 @@
-import React, { createContext, PropsWithChildren, useContext, useState } from 'react'
+import React, { createContext, PropsWithChildren, useContext, useEffect } from 'react'
+import { api } from '../../utils/api'
 import usePersistedState from '../persisted-state'
 import {
   AuthContextData
@@ -11,6 +12,11 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const loaded = true
   const authenticated = !!apiAddress
+
+  useEffect(() => {
+    console.log('API address:', apiAddress)
+    api.defaults.baseURL = apiAddress
+  }, [apiAddress])
 
   function clearApiAddress() {
     setApiAddress('')
