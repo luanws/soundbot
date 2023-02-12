@@ -1,8 +1,6 @@
 import axios from "axios"
+import { Bible, Bibles } from "../models/bible"
 import Storage from "../utils/storage"
-
-type Bible = string[][][]
-type Bibles = { [key: string]: Bible }
 
 export namespace BibleService {
     const availableVersionsURL = 'https://raw.githubusercontent.com/luanws/bible-database/main/data/available_versions.json'

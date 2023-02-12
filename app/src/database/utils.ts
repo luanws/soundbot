@@ -1,32 +1,16 @@
-import { db } from "."
+import { db } from "./connection"
 
 export namespace DatabaseUtils {
     export async function showTables(): Promise<void> {
         try {
             await db.transaction(tx => {
-                tx.executeSql(
-                    'SELECT name, sql from sqlite_master where type="table"',
-                    [],
-                    (_, { rows }) => {
-                        const tables: { [key: string]: { [key: string]: string } } = {}
-                        rows._array.forEach(table => {
-                            const tableName = table.name
-                            const columns: string[] = table.sql.match(/\((.*)\)/g)[0]
-                                .replace('(', '')
-                                .replace(')', '')
-                                .split(',')
-                            columns.forEach(column => {
-                                const [columnName, columnType] = column.trim().split(' ')
-                                if (!tables[tableName]) tables[tableName] = {}
-                                tables[tableName][columnName] = columnType
-                            })
-                        })
-                        console.log(JSON.stringify(tables, null, 2))
-                    }
-                )
+                tx.executeSql('SELECT name FROM sqlite_master WHERE type="table";', [], (_, { rows }) => {
+                    const tables = rows._array.map(table => table.name)
+                    console.log('Tables:', tables)
+                })
             })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -34,7 +18,7 @@ export namespace DatabaseUtils {
         try {
             await db.transaction(tx => {
                 tx.executeSql(
-                    'SELECT name from sqlite_master where type="table"',
+                    'SELECT name from sqlite_master where type="table;"',
                     [],
                     (_, { rows }) => {
                         rows._array.forEach(table => {
