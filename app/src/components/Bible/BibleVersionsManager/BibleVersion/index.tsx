@@ -1,5 +1,5 @@
 import React from 'react'
-import { BibleService } from '../../../services/bible'
+import { BibleService } from '../../../../services/bible'
 
 import { Container, DownloadButton, DownloadButtonIcon, DownloadButtonText, DownloadedButtonText, DownloadedContainer, DownloadedIcon, VersionNameText } from './styles'
 

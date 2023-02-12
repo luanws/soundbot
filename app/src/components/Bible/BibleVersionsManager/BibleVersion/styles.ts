@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { Text, TouchableOpacity, View } from "react-native"
-import { styled } from "../../../hooks/theme"
+import { styled } from "../../../../hooks/theme"
 
 export const Container = styled(View)`
     padding: 8px;
