@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { api } from '../../utils/api'
 import usePersistedState from '../persisted-state'
@@ -8,7 +9,7 @@ import {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [apiAddress, setApiAddress] = usePersistedState<string>('api_address', '')
+  const [apiAddress, _setApiAddress] = usePersistedState<string>('api_address', '')
 
   const loaded = true
   const authenticated = !!apiAddress
@@ -18,8 +19,28 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     api.defaults.baseURL = apiAddress
   }, [apiAddress])
 
+  useEffect(() => {
+    checkConnection(apiAddress).then(connected => {
+      if (!connected) _setApiAddress('')
+    })
+  }, [])
+
+  async function checkConnection(apiAddress: string): Promise<boolean> {
+    try {
+      const { data } = await axios.get(apiAddress, { timeout: 1000 })
+      return data === 'Soundbot remote API'
+    } catch (error) {
+      return false
+    }
+  }
+
+  async function setApiAddress(apiAddress: string) {
+    const connected = await checkConnection(apiAddress)
+    if (connected) _setApiAddress(apiAddress)
+  }
+
   function clearApiAddress() {
-    setApiAddress('')
+    _setApiAddress('')
   }
 
   return (
