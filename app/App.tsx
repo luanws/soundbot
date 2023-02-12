@@ -3,13 +3,24 @@ import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native'
 import AppProvider from "./src/hooks"
+import { useTheme } from "./src/hooks/theme"
 import Routes from "./src/routes"
 import { themes } from "./src/utils/theme/themes"
+
+function Wrapper() {
+  const theme = useTheme()
+
+  return (
+    <>
+      <BackgroundColor color={theme.colors.background} />
+      <Routes />
+    </>
+  )
+}
 
 export default function App() {
   return (
     <>
-      <BackgroundColor color={{ light: "#fff", dark: "#000" }} />
       <StatusBar
         backgroundColor={themes.light.colors.primaryDark}
         style='light'
@@ -17,7 +28,7 @@ export default function App() {
       <NavigationContainer>
         <SafeAreaView style={{ flex: 1 }}>
           <AppProvider>
-            <Routes />
+            <Wrapper />
           </AppProvider>
         </SafeAreaView>
       </NavigationContainer>
