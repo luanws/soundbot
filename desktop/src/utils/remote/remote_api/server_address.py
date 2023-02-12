@@ -35,7 +35,7 @@ class ServerAddress:
     @property
     def address(self) -> str:
         if not self.prefix:
-            return f'{self.host}:{self.port}'
+            return f'http://{self.host}:{self.port}'
         return f'http://{self.host}:{self.port}/{self.prefix}'
 
     @property
