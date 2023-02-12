@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [apiAddress, _setApiAddress] = usePersistedState<string>('api_address', '')
 
-  const loaded = true
+  const authLoaded = true
   const authenticated = !!apiAddress
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     <AuthContext.Provider
       value={{
         apiAddress,
-        loaded,
+        authLoaded,
         authenticated,
         setApiAddress,
         clearApiAddress,

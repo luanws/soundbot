@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Storage from '../../utils/storage'
 
-function usePersistedState<T>(key: string, defaultState: T): [T, Dispatch<SetStateAction<T>>] {
+function usePersistedState<T>(key: string, defaultState: T): [T, Dispatch<SetStateAction<T>>, boolean] {
     const [state, setState] = useState<T>(defaultState)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         Storage.get<T>(key).then(state => {
             if (state !== undefined) setState(state)
+            setIsLoading(false)
         })
     }, [])
 
@@ -16,7 +18,7 @@ function usePersistedState<T>(key: string, defaultState: T): [T, Dispatch<SetSta
         }
     }, [state])
 
-    return [state, setState]
+    return [state, setState, isLoading]
 }
 
 export default usePersistedState

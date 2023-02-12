@@ -6,17 +6,19 @@ import usePersistedState from "../persisted-state"
 interface SettingsContextData {
   theme: ThemeTypes
   setTheme(theme: ThemeTypes): void
+  isThemeLoading: boolean
 }
 
 const SettingsContext = createContext({} as SettingsContextData)
 
 export function SettingsProvider({ children }: PropsWithChildren<{}>) {
-  const [theme, setTheme] = usePersistedState<ThemeTypes>('theme', 'light')
+  const [theme, setTheme, isThemeLoading] = usePersistedState<ThemeTypes>('theme', 'light')
 
   return (
     <SettingsContext.Provider value={{
       theme,
-      setTheme
+      setTheme,
+      isThemeLoading
     }}>
       {children}
     </SettingsContext.Provider>
