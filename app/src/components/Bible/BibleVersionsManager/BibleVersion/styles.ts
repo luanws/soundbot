@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { Feather, MaterialIcons } from '@expo/vector-icons'
 import { Text, TouchableOpacity, View } from "react-native"
 import { styled } from "../../../../hooks/theme"
 
@@ -50,4 +50,15 @@ export const DownloadedButtonText = styled(Text)`
     font-size: 16px;
     color: ${({ theme }) => theme.colors.success};
     margin-right: 8px;
+`
+
+export const DeleteButton = styled(TouchableOpacity)`
+    flex-direction: row;
+    align-items: center;
+    margin-left: 8px;
+`
+
+export const DeleteButtonIcon = styled(MaterialIcons)`
+    font-size: 20px;
+    color: ${({ theme }) => theme.colors.danger};
 `

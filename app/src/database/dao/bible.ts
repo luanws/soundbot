@@ -40,4 +40,15 @@ export namespace BibleDAO {
             }, reject)
         })
     }
+
+    export async function deleteVersion(version: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'DELETE FROM bibles WHERE version = ?;',
+                    [version]
+                )
+            }, reject, resolve)
+        })
+    }
 }

@@ -13,10 +13,10 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
 
   useEffect(() => {
     BibleService.getAvailableVersionsForDownload().then(setAvailableVersionsForDownload)
-    BibleService.getAvailableVersions().then(setAvailableVersions)
+    updateAvailableVersions()
   }, [])
 
-  function handleDownload(version: string) {
+  function updateAvailableVersions() {
     BibleService.getAvailableVersions().then(setAvailableVersions)
   }
 
@@ -28,7 +28,8 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
             key={version}
             version={version}
             available={availableVersions.includes(version)}
-            onDownloadPress={handleDownload}
+            onDownloadPress={updateAvailableVersions}
+            onDeletePress={updateAvailableVersions}
           />
         ))
       ) : (
@@ -37,7 +38,8 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
             key={version}
             version={version}
             available={availableVersions.includes(version)}
-            onDownloadPress={handleDownload}
+            onDownloadPress={updateAvailableVersions}
+            onDeletePress={updateAvailableVersions}
           />
         ))
       )}

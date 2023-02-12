@@ -22,6 +22,10 @@ export namespace BibleService {
         await BibleDAO.create(version, bible)
     }
 
+    export async function deleteVersion(version: string) {
+        await BibleDAO.deleteVersion(version)
+    }
+
     export async function getAvailableVersions(): Promise<string[]> {
         const versions = await BibleDAO.getVersions()
         return versions
