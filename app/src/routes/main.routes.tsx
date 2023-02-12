@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React from 'react'
 import { useTheme } from '../hooks/theme'
-import AuthScreen from '../screens/AuthScreen'
+import BibleScreen from '../screens/BibleScreen'
 import HomeScreen from '../screens/HomeScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import { Theme } from '../utils/theme/theme.model'
@@ -9,6 +9,7 @@ import DrawerIcon from './components/DrawerIcon'
 
 export type MainDrawerParamList = {
   Home: undefined
+  Bible: undefined
   Settings: undefined
 }
 
@@ -55,6 +56,18 @@ const MainRoutes: React.FC = () => {
           ),
         }}
       />
+
+      <Drawer.Screen
+        name='Bible'
+        component={BibleScreen}
+        options={{
+          title: 'Bíblia',
+          drawerIcon: (props) => (
+            <DrawerIcon icon='FontAwesome5/bible' {...props} />
+          ),
+        }}
+      />
+
       <Drawer.Screen
         name='Settings'
         component={SettingsScreen}
