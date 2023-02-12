@@ -1,4 +1,5 @@
 import React, { createContext, PropsWithChildren, useContext, useState } from 'react'
+import usePersistedState from '../persisted-state'
 import {
   AuthContextData
 } from './auth.model'
@@ -6,7 +7,7 @@ import {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [apiAddress, setApiAddress] = useState<string>('')
+  const [apiAddress, setApiAddress] = usePersistedState<string>('api_address', '')
 
   const loaded = true
   const authenticated = !!apiAddress
