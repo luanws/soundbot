@@ -7,9 +7,9 @@ const defaultColors: Colors = {
     primaryLight: '#07c1ff',
     primaryDark: '#024c65',
 
-    accent: '#2E75BB',
-    accentLight: '#378ce1',
-    accentDark: '#215587',
+    accent: '#ffb900',
+    accentLight: '#ffff44',
+    accentDark: '#b27500',
 
     background: '#F4F4F4',
     containerBackground: '#fff',
@@ -20,7 +20,7 @@ const defaultColors: Colors = {
     disabled: "#666360",
     placeholder: "#777",
 
-    title: '#0277bd',
+    title: '#ffff44',
     text1: '#111',
     text2: '#444',
     text3: 'gray',
@@ -62,10 +62,10 @@ export const themes: { [key in ThemeTypes]: Theme } = {
             unfocusedIcon: "#aaa",
             focused: "#3e9fff",
 
-            title: '#1c987c',
+            // title: '#ffb900',
             text1: '#fff',
             text2: '#D3CFC9',
-            text3: '#ddd',
+            text3: '#a4a8a0',
             link: 'deepskyblue',
 
             success: "#00e676",

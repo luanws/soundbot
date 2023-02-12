@@ -1,6 +1,9 @@
 import React, { useRef } from 'react'
+import { ScrollView } from 'react-native'
+import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
 import BarCodeScannerModal, { BarCodeScannerModalReference } from '../../components/Modal/BarCodeScannerModal'
 import { useAuth } from '../../hooks/auth'
+import Section from './Section'
 import { Container, ScanQRCodeButton, ScanQRCodeButtonText } from './styles'
 
 interface Props {
@@ -21,15 +24,34 @@ const AuthScreen: React.FC<Props> = (props) => {
   }
 
   return (
-    <Container>
-      <ScanQRCodeButton onPress={handleScanQRCodeButtonPress}>
-        <ScanQRCodeButtonText>Escaneie o QR code</ScanQRCodeButtonText>
-      </ScanQRCodeButton>
-      <BarCodeScannerModal
-        ref={barCodeScannerModalRef}
-        onBarCodeScanned={handleBarCodeScanned}
-      />
-    </Container>
+    <ScrollView>
+      <Container>
+        <Section
+          title='Conexão'
+          description={
+            'Escaneie o QR code que aparece na tela do computador para conectar o aplicativo ao Soundbot. ' +
+            'Para que o QR code apareça, o Soundbot deve estar em execução no computador.'
+          }
+        >
+          <ScanQRCodeButton onPress={handleScanQRCodeButtonPress}>
+            <ScanQRCodeButtonText>Escanear QR code</ScanQRCodeButtonText>
+          </ScanQRCodeButton>
+          <BarCodeScannerModal
+            ref={barCodeScannerModalRef}
+            onBarCodeScanned={handleBarCodeScanned}
+          />
+        </Section>
+        <Section
+          title='Versões da bíblia'
+          description={
+            'Selecione as versões da bíblia que deseja utilizar. ' +
+            'As versões selecionadas serão baixadas automaticamente.'
+          }
+        >
+          <BibleVersionsManager />
+        </Section>
+      </Container>
+    </ScrollView >
   )
 }
 
