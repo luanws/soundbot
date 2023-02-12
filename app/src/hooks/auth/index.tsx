@@ -11,6 +11,10 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const loaded = true
   const authenticated = !!apiAddress
 
+  function clearApiAddress() {
+    setApiAddress('')
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -18,6 +22,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
         loaded,
         authenticated,
         setApiAddress,
+        clearApiAddress,
       }}
     >
       {children}

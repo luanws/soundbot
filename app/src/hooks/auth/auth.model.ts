@@ -3,4 +3,5 @@ export interface AuthContextData {
     authenticated: boolean
     loaded: boolean
     setApiAddress(apiAddress: string): void
+    clearApiAddress(): void
 }
