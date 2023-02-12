@@ -1,4 +1,5 @@
 import axios from "axios"
+import { BibleDAO } from "../database/dao/bible"
 import { Bible, Bibles } from "../models/bible"
 import Storage from "../utils/storage"
 
@@ -18,14 +19,12 @@ export namespace BibleService {
 
     export async function downloadVersion(version: string) {
         const bible = await getBibleOnline(version)
-        const bibles = await Storage.get<Bibles>('bibles')
-        await Storage.set('bibles', { ...bibles, [version]: bible })
+        await BibleDAO.create(version, bible)
     }
 
     export async function getAvailableVersions(): Promise<string[]> {
-        const bibles = await Storage.get<Bibles>('bibles')
-        if (!bibles) return []
-        return Object.keys(bibles)
+        const versions = await BibleDAO.getVersions()
+        return versions
     }
 
     export async function getBible(version: string): Promise<Bible> {
