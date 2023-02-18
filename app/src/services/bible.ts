@@ -1,6 +1,6 @@
 import axios from "axios"
 import { BibleDAO } from "../database/dao/bible"
-import { Bible, BibleReference } from "../models/bible"
+import { Bible, BibleReference, BibleVerse } from "../models/bible"
 
 export namespace BibleService {
     const availableVersionsURL = 'https://raw.githubusercontent.com/luanws/bible-database/main/data/available_versions.json'
@@ -63,5 +63,21 @@ export namespace BibleService {
 
     export function getIndexOfBookName(bookName: string): number {
         return allBookNames.indexOf(bookName)
+    }
+
+    export async function getVerseFromBible(bible: Bible, reference: BibleReference): Promise<BibleVerse> {
+        const text = await getTextFromBible(bible, reference)
+        return {
+            reference,
+            text
+        }
+    }
+
+    export async function getNextVerse(bible: Bible, reference: BibleReference): Promise<BibleVerse> {
+        return await getVerseFromBible(bible, { ...reference, verseNumber: reference.verseNumber + 1 })
+    }
+
+    export async function getPreviousVerse(bible: Bible, reference: BibleReference): Promise<BibleVerse> {
+        return await getVerseFromBible(bible, { ...reference, verseNumber: reference.verseNumber - 1 })
     }
 }

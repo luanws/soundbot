@@ -3,6 +3,7 @@ import { Modal } from 'react-native'
 import BibleBar from '../../components/Bible/BibleBar'
 import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
+import FloatActionButton from '../../components/FloatActionButton'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import usePersistedState from '../../hooks/persisted-state'
 import { Bible, BibleReference } from '../../models/bible'
@@ -42,11 +43,27 @@ const BibleScreen: React.FC = (props) => {
     setBibleReferenceSelectorIsVisible(false)
   }
 
+  async function handleNextVerse() {
+    if (bible && bibleReference) {
+      const { reference, text } = await BibleService.getNextVerse(bible, bibleReference)
+      setBibleReference(reference)
+      setBibleText(text)
+    }
+  }
+
+  async function handlePreviousVerse() {
+    if (bible && bibleReference) {
+      const previousVerse = await BibleService.getPreviousVerse(bible, bibleReference)
+      setBibleReference(previousVerse.reference)
+      setBibleText(previousVerse.text)
+    }
+  }
+
   return (
     <>
       <Container>
         <BibleBar
-          text={bibleReference ? BibleService.bibleReferenceToString(bibleReference) : 'Selecione um versículo'}
+          reference={bibleReference}
           version={bibleVersion}
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
@@ -55,6 +72,18 @@ const BibleScreen: React.FC = (props) => {
           <BibleText>{bibleText}</BibleText>
         </BibleTextContainer>
       </Container>
+      <FloatActionButton
+        icon='MaterialIcons/navigate-before'
+        position='left'
+        size={48}
+        onPress={handlePreviousVerse}
+      />
+      <FloatActionButton
+        icon='MaterialIcons/navigate-next'
+        position='right'
+        size={48}
+        onPress={handleNextVerse}
+      />
       <Modal
         visible={bibleReferenceSelectorIsVisible}
         animationType='slide'
