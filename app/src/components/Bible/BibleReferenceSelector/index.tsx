@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { SceneMap, TabBar } from 'react-native-tab-view'
 import { useTheme } from '../../../hooks/theme'
-import { BibleReference } from '../../../models/bible'
+import { Bible, BibleReference } from '../../../models/bible'
 import { BibleService } from '../../../services/bible'
 import BookSelector from './BookSelector'
 import NumberSelector from './NumberSelector'
@@ -11,18 +11,17 @@ import { TabViewStyled } from './styles'
 
 interface Props {
   onSelectReference?(reference: BibleReference): void
+  bible: Bible
 }
 
 const allBookNames = BibleService.getAllBookNames()
-const chapterNumbers = range(1, 152)
-const verseNumbers = range(1, 153)
 
 function range(start: number, end: number): number[] {
   return Array(end - start + 1).fill(0).map((_, idx) => start + idx)
 }
 
 const BibleReferenceSelector: React.FC<Props> = (props) => {
-  const { onSelectReference } = props
+  const { onSelectReference, bible } = props
 
   const layout = useWindowDimensions()
   const theme = useTheme()
@@ -30,6 +29,8 @@ const BibleReferenceSelector: React.FC<Props> = (props) => {
   const [bookName, setBookName] = useState<string | undefined>()
   const [chapterNumber, setChapterNumber] = useState<number | undefined>()
   const [tabIndex, setTabIndex] = useState<number>(0)
+  const [chapterNumbers, setChapterNumbers] = useState<number[]>([])
+  const [verseNumbers, setVerseNumbers] = useState<number[]>([])
   const [routes] = useState([
     { key: 'book', title: 'Livro' },
     { key: 'chapter', title: 'Capítulo' },
@@ -37,13 +38,21 @@ const BibleReferenceSelector: React.FC<Props> = (props) => {
   ])
 
   function handleSelectBookName(bookName: string) {
-    setBookName(bookName)
     setTabIndex(1)
+    setBookName(bookName)
+    const bookIndex = BibleService.getIndexOfBookName(bookName)
+    setChapterNumbers(range(1, bible[bookIndex].length))
   }
 
   function handleSelectChapterNumber(chapterNumber: number) {
-    setChapterNumber(chapterNumber)
+    if (!bookName) {
+      setTabIndex(0)
+      return
+    }
     setTabIndex(2)
+    setChapterNumber(chapterNumber)
+    const bookIndex = BibleService.getIndexOfBookName(bookName)
+    setVerseNumbers(range(1, bible[bookIndex][chapterNumber - 1].length))
   }
 
   function handleSelectVerseNumber(verseNumber: number) {
