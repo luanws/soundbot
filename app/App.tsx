@@ -8,7 +8,6 @@ import { DatabaseUtils } from "./src/database/utils"
 import AppProvider from "./src/hooks"
 import { useTheme } from "./src/hooks/theme"
 import Routes from "./src/routes"
-import { themes } from "./src/utils/theme/themes"
 
 async function runOnStartup() {
   await Migrations.runMigrations()
@@ -23,6 +22,10 @@ function Wrapper() {
   return (
     <>
       <BackgroundColor color={theme.colors.background} />
+      <StatusBar
+        backgroundColor={theme.colors.statusBar.background}
+        style={theme.colors.statusBar.icons}
+      />
       <NavigationContainer>
         <Routes />
       </NavigationContainer>
@@ -33,10 +36,6 @@ function Wrapper() {
 export default function App() {
   return (
     <>
-      <StatusBar
-        backgroundColor={themes.light.colors.primaryDark}
-        style='light'
-      />
       <SafeAreaView style={{ flex: 1 }}>
         <AppProvider>
           <Wrapper />

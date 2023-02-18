@@ -15,9 +15,9 @@ const AuthRoutes: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTintColor: 'white',
+        headerTintColor: theme.colors.actionBar.text,
         headerStyle: {
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.actionBar.background,
         },
         contentStyle: {
           backgroundColor: theme.colors.background,

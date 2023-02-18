@@ -35,6 +35,16 @@ export interface Colors {
     
     icon: string
     
+    actionBar: {
+        background: string
+        text: string
+    }
+
+    statusBar: {
+        background: string
+        icons: 'light' | 'dark'
+    }
+
     navigationDrawer: {
         activeBackground: string
         activeContent: string

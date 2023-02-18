@@ -22,9 +22,9 @@ const MainRoutes: React.FC = () => {
     <Drawer.Navigator
       initialRouteName='Home'
       screenOptions={{
-        headerTintColor: 'white',
+        headerTintColor: theme.colors.actionBar.text,
         headerStyle: {
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.actionBar.background,
         },
         sceneContainerStyle: {
           backgroundColor: theme.colors.background,
