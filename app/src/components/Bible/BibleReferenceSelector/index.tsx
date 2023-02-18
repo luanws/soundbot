@@ -5,9 +5,8 @@ import { useTheme } from '../../../hooks/theme'
 import { BibleReference } from '../../../models/bible'
 import { BibleService } from '../../../services/bible'
 import BookSelector from './BookSelector'
-import ChapterSelector from './ChapterSelector'
+import NumberSelector from './NumberSelector'
 import { TabViewStyled } from './styles'
-import VerseSelector from './VerseSelector'
 
 
 interface Props {
@@ -15,8 +14,8 @@ interface Props {
 }
 
 const allBookNames = BibleService.getAllBookNames()
-const chapterNumbers = range(1, 153)
-const verseNumbers = range(1, 152)
+const chapterNumbers = range(1, 5000)
+const verseNumbers = range(1, 5000)
 
 function range(start: number, end: number): number[] {
   return Array(end - start + 1).fill(0).map((_, idx) => start + idx)
@@ -68,15 +67,19 @@ const BibleReferenceSelector: React.FC<Props> = (props) => {
           />
         ),
         chapter: () => (
-          <ChapterSelector
-            chapterNumbers={chapterNumbers}
-            onSelectChapterNumber={handleSelectChapterNumber}
+          <NumberSelector
+            numbers={chapterNumbers}
+            columns={3}
+            padding={8}
+            onSelectNumber={handleSelectChapterNumber}
           />
         ),
         verse: () => (
-          <VerseSelector
-            verseNumbers={verseNumbers}
-            onSelectVerseNumber={handleSelectVerseNumber}
+          <NumberSelector
+            numbers={verseNumbers}
+            columns={3}
+            padding={8}
+            onSelectNumber={handleSelectVerseNumber}
           />
         ),
       })}
