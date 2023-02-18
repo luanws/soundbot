@@ -14,8 +14,8 @@ interface Props {
 }
 
 const allBookNames = BibleService.getAllBookNames()
-const chapterNumbers = range(1, 5000)
-const verseNumbers = range(1, 5000)
+const chapterNumbers = range(1, 152)
+const verseNumbers = range(1, 153)
 
 function range(start: number, end: number): number[] {
   return Array(end - start + 1).fill(0).map((_, idx) => start + idx)
@@ -69,7 +69,7 @@ const BibleReferenceSelector: React.FC<Props> = (props) => {
         chapter: () => (
           <NumberSelector
             numbers={chapterNumbers}
-            columns={3}
+            columns={4}
             padding={8}
             onSelectNumber={handleSelectChapterNumber}
           />
@@ -77,7 +77,7 @@ const BibleReferenceSelector: React.FC<Props> = (props) => {
         verse: () => (
           <NumberSelector
             numbers={verseNumbers}
-            columns={3}
+            columns={4}
             padding={8}
             onSelectNumber={handleSelectVerseNumber}
           />
