@@ -15,6 +15,8 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
   const [availableVersionsForDownload, setAvailableVersionsForDownload] = useState<string[]>([])
   const [availableVersions, setAvailableVersions] = useState<string[]>([])
 
+  const availableVersionsForDownloadFiltered = availableVersionsForDownload.filter((version) => !availableVersions.includes(version))
+
   useEffect(() => {
     BibleService.getAvailableVersionsForDownload().then(setAvailableVersionsForDownload)
     updateAvailableVersions()
@@ -26,32 +28,40 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <TitleText>Disponíveis</TitleText>
-      <BibleVersionsContainer>
-        {availableVersions.map((version) => (
-          <BibleVersion
-            key={version}
-            selected={version === selectedVersion}
-            onVersionSelect={onVersionSelect}
-            version={version}
-            available={availableVersions.includes(version)}
-            onDownloadPress={updateAvailableVersions}
-            onDeletePress={updateAvailableVersions}
-          />
-        ))}
-      </BibleVersionsContainer>
-      <TitleText>Disponíveis para download</TitleText>
-      <BibleVersionsContainer>
-        {availableVersionsForDownload.filter((version) => !availableVersions.includes(version)).map((version) => (
-          <BibleVersion
-            key={version}
-            version={version}
-            available={availableVersions.includes(version)}
-            onDownloadPress={updateAvailableVersions}
-            onDeletePress={updateAvailableVersions}
-          />
-        ))}
-      </BibleVersionsContainer>
+      {availableVersions.length > 0 && (
+        <>
+          <TitleText>Disponíveis</TitleText>
+          <BibleVersionsContainer>
+            {availableVersions.map((version) => (
+              <BibleVersion
+                key={version}
+                selected={version === selectedVersion}
+                onVersionSelect={onVersionSelect}
+                version={version}
+                available={availableVersions.includes(version)}
+                onDownloadPress={updateAvailableVersions}
+                onDeletePress={updateAvailableVersions}
+              />
+            ))}
+          </BibleVersionsContainer>
+        </>
+      )}
+      {availableVersionsForDownloadFiltered.length > 0 && (
+        <>
+          <TitleText>Disponíveis para download</TitleText>
+          <BibleVersionsContainer>
+            {availableVersionsForDownloadFiltered.map((version) => (
+              <BibleVersion
+                key={version}
+                version={version}
+                available={availableVersions.includes(version)}
+                onDownloadPress={updateAvailableVersions}
+                onDeletePress={updateAvailableVersions}
+              />
+            ))}
+          </BibleVersionsContainer>
+        </>
+      )}
     </Container>
   )
 }
