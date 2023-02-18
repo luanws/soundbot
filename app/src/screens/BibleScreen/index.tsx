@@ -7,7 +7,7 @@ import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import usePersistedState from '../../hooks/persisted-state'
 import { Bible, BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
-import { Container } from './styles'
+import { BibleText, BibleTextContainer, Container } from './styles'
 
 const BibleScreen: React.FC = (props) => {
   const bibleVersionsManagerModalizeRef = useRef<GestureModalRef>(null)
@@ -17,10 +17,17 @@ const BibleScreen: React.FC = (props) => {
   const [bible, setBible] = useState<Bible | undefined>()
   const [bibleVersion, setBibleVersion] = usePersistedState<string>('bible-version-selected', 'ARA')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
+  const [bibleText, setBibleText] = useState<string>('')
 
   useEffect(() => {
     BibleService.getBible(bibleVersion).then(setBible)
   }, [bibleVersion])
+
+  useEffect(() => {
+    if (bible && bibleReference) {
+      BibleService.getTextFromBible(bible, bibleReference).then(setBibleText)
+    }
+  }, [bible, bibleReference])
 
   function handleOpenBibleVersionsManager() {
     bibleVersionsManagerModalizeRef.current?.open()
@@ -44,6 +51,9 @@ const BibleScreen: React.FC = (props) => {
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
         />
+        <BibleTextContainer>
+          <BibleText>{bibleText}</BibleText>
+        </BibleTextContainer>
       </Container>
       <Modal
         visible={bibleReferenceSelectorIsVisible}
@@ -51,7 +61,10 @@ const BibleScreen: React.FC = (props) => {
         onRequestClose={() => setBibleReferenceSelectorIsVisible(false)}
       >
         {!!bible && (
-          <BibleReferenceSelector onSelectReference={handleSelectReference} bible={bible} />
+          <BibleReferenceSelector
+            bible={bible}
+            onSelectReference={handleSelectReference}
+          />
         )}
       </Modal>
       <GestureModal ref={bibleVersionsManagerModalizeRef}>

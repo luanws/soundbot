@@ -47,8 +47,10 @@ export namespace BibleService {
         return await BibleDAO.getBible(version)
     }
 
-    export function getTextFromBible(bible: Bible, book: number, chapter: number, verse: number): string {
-        return bible[book - 1][chapter - 1][verse - 1]
+    export async function getTextFromBible(bible: Bible, reference: BibleReference): Promise<string> {
+        const { bookName, chapterNumber, verseNumber } = reference
+        const bookIndex = allBookNames.indexOf(bookName)
+        return bible[bookIndex][chapterNumber - 1][verseNumber - 1]
     }
 
     export function bibleReferenceToString(reference: BibleReference): string {
