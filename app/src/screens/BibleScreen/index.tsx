@@ -85,13 +85,11 @@ const BibleScreen: React.FC = (props) => {
       <FloatActionButton
         icon='MaterialIcons/navigate-before'
         position='left'
-        size={48}
         onPress={handlePreviousVerse}
       />
       <FloatActionButton
         icon='MaterialIcons/navigate-next'
         position='right'
-        size={48}
         onPress={handleNextVerse}
       />
       <Modal
