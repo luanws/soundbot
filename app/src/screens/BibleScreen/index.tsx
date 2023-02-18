@@ -4,6 +4,7 @@ import BibleBar from '../../components/Bible/BibleBar'
 import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
+import usePersistedState from '../../hooks/persisted-state'
 import { Bible, BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
 import { Container } from './styles'
@@ -14,7 +15,7 @@ const BibleScreen: React.FC = (props) => {
   const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
 
   const [bible, setBible] = useState<Bible | undefined>()
-  const [bibleVersion, setBibleVersion] = useState('NVI')
+  const [bibleVersion, setBibleVersion] = usePersistedState<string>('bible-version-selected', 'ARA')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
 
   useEffect(() => {
@@ -54,7 +55,10 @@ const BibleScreen: React.FC = (props) => {
         )}
       </Modal>
       <GestureModal ref={bibleVersionsManagerModalizeRef}>
-        <BibleVersionsManager />
+        <BibleVersionsManager
+          selectedVersion={bibleVersion}
+          onVersionSelect={setBibleVersion}
+        />
       </GestureModal>
     </>
   )

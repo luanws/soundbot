@@ -2,16 +2,15 @@ import { Feather, MaterialIcons } from '@expo/vector-icons'
 import { Text, TouchableOpacity, View } from "react-native"
 import { styled } from "../../../../hooks/theme"
 
-export const Container = styled(View)`
+export const Container = styled(TouchableOpacity)`
     padding: 8px;
     padding-left: 12px;
     padding-right: 16px;
     border-radius: 8px;
-    background-color: ${({ theme }) => theme.colors.containerBackground};
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 `
 
 export const VersionNameText = styled(Text)`
@@ -41,15 +40,15 @@ export const DownloadedContainer = styled(View)`
     align-items: center;
 `
 
-export const DownloadedIcon = styled(Feather)`
+export const SelectedIcon = styled(Feather)`
     font-size: 20px;
     color: ${({ theme }) => theme.colors.success};    
+    margin-right: 8px;
 `
 
-export const DownloadedButtonText = styled(Text)`
+export const SelectedButtonText = styled(Text)`
     font-size: 16px;
     color: ${({ theme }) => theme.colors.success};
-    margin-right: 8px;
 `
 
 export const DeleteButton = styled(TouchableOpacity)`

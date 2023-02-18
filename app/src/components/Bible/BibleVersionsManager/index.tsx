@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { BibleService } from '../../../services/bible'
 import BibleVersion from './BibleVersion'
 
-import { Container } from './styles'
+import { BibleVersionsContainer, Container, TitleText } from './styles'
 
 interface Props {
+  selectedVersion?: string
+  onVersionSelect?(version: string): void
 }
 
 const BibleVersionsManager: React.FC<Props> = (props) => {
+  const { selectedVersion, onVersionSelect } = props
+
   const [availableVersionsForDownload, setAvailableVersionsForDownload] = useState<string[]>([])
   const [availableVersions, setAvailableVersions] = useState<string[]>([])
 
@@ -22,8 +26,23 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      {availableVersionsForDownload.length > 0 ? (
-        availableVersionsForDownload.map((version) => (
+      <TitleText>Disponíveis</TitleText>
+      <BibleVersionsContainer>
+        {availableVersions.map((version) => (
+          <BibleVersion
+            key={version}
+            selected={version === selectedVersion}
+            onVersionSelect={onVersionSelect}
+            version={version}
+            available={availableVersions.includes(version)}
+            onDownloadPress={updateAvailableVersions}
+            onDeletePress={updateAvailableVersions}
+          />
+        ))}
+      </BibleVersionsContainer>
+      <TitleText>Disponíveis para download</TitleText>
+      <BibleVersionsContainer>
+        {availableVersionsForDownload.filter((version) => !availableVersions.includes(version)).map((version) => (
           <BibleVersion
             key={version}
             version={version}
@@ -31,18 +50,8 @@ const BibleVersionsManager: React.FC<Props> = (props) => {
             onDownloadPress={updateAvailableVersions}
             onDeletePress={updateAvailableVersions}
           />
-        ))
-      ) : (
-        availableVersions.map((version) => (
-          <BibleVersion
-            key={version}
-            version={version}
-            available={availableVersions.includes(version)}
-            onDownloadPress={updateAvailableVersions}
-            onDeletePress={updateAvailableVersions}
-          />
-        ))
-      )}
+        ))}
+      </BibleVersionsContainer>
     </Container>
   )
 }
