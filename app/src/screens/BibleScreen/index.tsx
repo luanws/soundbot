@@ -13,7 +13,6 @@ const BibleScreen: React.FC = (props) => {
 
   const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
 
-  const [selectedReference, setSelectedReference] = useState<BibleReference | undefined>()
   const [bibleVersion, setBibleVersion] = useState('NVI')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
 
