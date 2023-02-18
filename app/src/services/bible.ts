@@ -1,6 +1,6 @@
 import axios from "axios"
 import { BibleDAO } from "../database/dao/bible"
-import { Bible } from "../models/bible"
+import { Bible, BibleReference, BibleVerse } from "../models/bible"
 
 export namespace BibleService {
     const availableVersionsURL = 'https://raw.githubusercontent.com/luanws/bible-database/main/data/available_versions.json'
@@ -35,5 +35,9 @@ export namespace BibleService {
 
     export function getTextFromBible(bible: Bible, book: number, chapter: number, verse: number): string {
         return bible[book - 1][chapter - 1][verse - 1]
+    }
+
+    export function bibleReferenceToString(reference: BibleReference): string {
+        return `${reference.bookName} ${reference.chapterNumber}:${reference.verseNumber}`
     }
 }

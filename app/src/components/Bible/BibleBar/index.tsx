@@ -5,18 +5,20 @@ import { Container, ReferenceButton, ReferenceText, VersionButton, VersionText }
 interface Props {
   onPressReference?(): void
   onPressVersion?(): void
+  text: string
+  version: string
 }
 
 const BibleBar: React.FC<Props> = (props) => {
-  const { onPressReference, onPressVersion } = props
+  const { text, version, onPressReference, onPressVersion } = props
 
   return (
     <Container>
       <ReferenceButton onPress={onPressReference}>
-        <ReferenceText>João 3:16</ReferenceText>
+        <ReferenceText>{text}</ReferenceText>
       </ReferenceButton>
       <VersionButton onPress={onPressVersion}>
-        <VersionText>ARA</VersionText>
+        <VersionText>{version}</VersionText>
       </VersionButton>
     </Container>
   )
