@@ -8,6 +8,7 @@ import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import usePersistedState from '../../hooks/persisted-state'
 import { Bible, BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
+import { CommandService } from '../../services/command'
 import { BibleText, BibleTextContainer, Container } from './styles'
 
 const BibleScreen: React.FC = (props) => {
@@ -25,10 +26,17 @@ const BibleScreen: React.FC = (props) => {
   }, [bibleVersion])
 
   useEffect(() => {
-    if (bible && bibleReference) {
-      BibleService.getTextFromBible(bible, bibleReference).then(setBibleText)
-    }
+    updateBibleText()
   }, [bible, bibleReference])
+
+  async function updateBibleText() {
+    if (bible && bibleReference) {
+      const bibleText = await BibleService.getTextFromBible(bible, bibleReference)
+      setBibleText(bibleText)
+      const referenceString = BibleService.bibleReferenceToString(bibleReference)
+      await CommandService.showText(`${bibleText} (${referenceString})`)
+    }
+  }
 
   function handleOpenBibleVersionsManager() {
     bibleVersionsManagerModalizeRef.current?.open()
