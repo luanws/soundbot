@@ -76,9 +76,11 @@ const BibleScreen: React.FC = (props) => {
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
         />
-        <BibleTextContainer>
-          <BibleText>{bibleText}</BibleText>
-        </BibleTextContainer>
+        {bibleText && (
+          <BibleTextContainer>
+            <BibleText>{bibleText}</BibleText>
+          </BibleTextContainer>
+        )}
       </Container>
       <FloatActionButton
         icon='MaterialIcons/navigate-before'

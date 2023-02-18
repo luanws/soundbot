@@ -15,6 +15,7 @@ export interface Colors {
 
     background: string
     containerBackground: string
+    containerBackgroundColored: string
     divider: string
     unfocused: string
     unfocusedIcon: string

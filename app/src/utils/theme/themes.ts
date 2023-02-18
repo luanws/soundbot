@@ -17,6 +17,7 @@ export const themes: { [key in ThemeTypes]: Theme } = {
 
             background: '#F4F4F4',
             containerBackground: '#fff',
+            containerBackgroundColored: '#d2f5d2',
             divider: '#E5E5E5',
             unfocused: "#ddd",
             unfocusedIcon: "#666360",
@@ -65,6 +66,7 @@ export const themes: { [key in ThemeTypes]: Theme } = {
 
             background: '#1F1E1F',
             containerBackground: '#2E2E34',
+            containerBackgroundColored: '#193c19',
             divider: '#777',
             unfocused: "#777",
             unfocusedIcon: "#aaa",
