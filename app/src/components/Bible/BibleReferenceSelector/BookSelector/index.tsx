@@ -1,5 +1,7 @@
 import React from 'react'
-import { BookNameButton, BookNameText, Container, Scroll } from './styles'
+import { FlatList } from 'react-native'
+import BookCell from './BookCell'
+import { Container } from './styles'
 
 interface Props {
   bookNames: string[]
@@ -14,15 +16,15 @@ const BookSelector: React.FC<Props> = (props) => {
   }
 
   return (
-    <Scroll>
-      <Container>
-        {bookNames.map((bookName) => (
-          <BookNameButton key={bookName} onPress={() => handleSelectBookName(bookName)}>
-            <BookNameText>{bookName}</BookNameText>
-          </BookNameButton>
-        ))}
-      </Container>
-    </Scroll>
+    <Container>
+      <FlatList
+        data={bookNames}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <BookCell bookName={item} onSelectBookName={handleSelectBookName} />
+        )}
+      />
+    </Container>
   )
 }
 
