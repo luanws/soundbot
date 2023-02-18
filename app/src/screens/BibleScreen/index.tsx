@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { Modal } from 'react-native'
 import BibleBar from '../../components/Bible/BibleBar'
 import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
@@ -10,6 +11,9 @@ import { Container } from './styles'
 const BibleScreen: React.FC = (props) => {
   const bibleVersionsManagerModalizeRef = useRef<GestureModalRef>(null)
 
+  const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
+
+  const [selectedReference, setSelectedReference] = useState<BibleReference | undefined>()
   const [bibleVersion, setBibleVersion] = useState('NVI')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
 
@@ -18,7 +22,12 @@ const BibleScreen: React.FC = (props) => {
   }
 
   function handleSelectVerse() {
-    console.log('handleSelectVerse')
+    setBibleReferenceSelectorIsVisible(true)
+  }
+
+  function handleSelectReference(reference: BibleReference) {
+    setBibleReference(reference)
+    setBibleReferenceSelectorIsVisible(false)
   }
 
   return (
@@ -30,8 +39,14 @@ const BibleScreen: React.FC = (props) => {
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
         />
-        <BibleReferenceSelector/>
       </Container>
+      <Modal
+        visible={bibleReferenceSelectorIsVisible}
+        animationType='slide'
+        onRequestClose={() => setBibleReferenceSelectorIsVisible(false)}
+      >
+        <BibleReferenceSelector onSelectReference={handleSelectReference} />
+      </Modal>
       <GestureModal ref={bibleVersionsManagerModalizeRef}>
         <BibleVersionsManager />
       </GestureModal>
