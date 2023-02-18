@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import BibleBar from '../../components/Bible/BibleBar'
+import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import { BibleReference } from '../../models/bible'
@@ -29,6 +30,7 @@ const BibleScreen: React.FC = (props) => {
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
         />
+        <BibleReferenceSelector/>
       </Container>
       <GestureModal ref={bibleVersionsManagerModalizeRef}>
         <BibleVersionsManager />
