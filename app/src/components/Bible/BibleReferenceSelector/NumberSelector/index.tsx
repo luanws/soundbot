@@ -18,7 +18,7 @@ const NumberSelector: React.FC<Props> = (props) => {
   }
 
   return (
-    <Container style={{ padding }}>
+    <Container padding={padding}>
       <FlatList
         data={numbers}
         keyExtractor={(item) => item.toString()}

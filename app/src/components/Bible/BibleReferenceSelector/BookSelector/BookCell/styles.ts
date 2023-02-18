@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from 'react-native'
 import { styled } from "../../../../../hooks/theme"
 
 export const BookNameButton = styled(TouchableOpacity)`
-    padding: 16px;
+    padding: 24px;
 `
 
 export const BookNameText = styled(Text)`
