@@ -17,24 +17,28 @@ export const themes: { [key in ThemeTypes]: Theme } = {
 
             background: '#F4F4F4',
             containerBackground: '#fff',
-            containerBackgroundColored: '#d2f5d2',
             divider: '#E5E5E5',
             unfocused: "#ddd",
             unfocusedIcon: "#666360",
             focused: "#2E75BB",
             disabled: "#666360",
             placeholder: "#777",
-
+            
             title: '#ffff44',
             text1: '#111',
             text2: '#444',
             text3: 'gray',
             link: 'blue',
-
+            
             success: "#00a152",
             info: "#5bc0de",
             warning: "#b2a300",
             danger: "#ab003c",
+            
+            successContainer: '#d2f5d2',
+            infoContainer: '#d2f5f5',
+            warningContainer: '#f5f5d2',
+            dangerContainer: '#f5d2d2',
 
             icon: '#444',
 
@@ -66,24 +70,28 @@ export const themes: { [key in ThemeTypes]: Theme } = {
 
             background: '#1F1E1F',
             containerBackground: '#2E2E34',
-            containerBackgroundColored: '#193c19',
             divider: '#777',
             unfocused: "#777",
             unfocusedIcon: "#aaa",
             focused: "#3e9fff",
             disabled: "#666360",
             placeholder: "#777",
-
+            
             title: '#ffff44',
             text1: '#fff',
             text2: '#D3CFC9',
             text3: '#a4a8a0',
             link: 'deepskyblue',
-
+            
             success: "#00e676",
             info: "#5bc0de",
             warning: "#ffea00",
             danger: "#f50057",
+            
+            successContainer: '#193c19',
+            infoContainer: '#193c3c',
+            warningContainer: '#3c3c19',
+            dangerContainer: '#3c1919',
 
             icon: '#fff',
 

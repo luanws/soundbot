@@ -9,18 +9,19 @@ import usePersistedState from '../../hooks/persisted-state'
 import { BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
 import { CommandService } from '../../services/command'
-import { BibleText, BibleTextContainer, Container } from './styles'
+import { BibleText, BibleTextContainer, Container, ContentContainer, WarningContainer, WarningText } from './styles'
 
 const BibleScreen: React.FC = (props) => {
   const bibleVersionsManagerModalizeRef = useRef<GestureModalRef>(null)
 
   const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
-
   const [bibleVersion, setBibleVersion] = usePersistedState<string>('bible-version-selected', 'ARA')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
   const [bibleText, setBibleText] = useState<string>('')
+  const [warningMessage, setWarningMessage] = useState<string | null>(null)
 
   useEffect(() => {
+    setWarningMessage(null)
     updateBibleText()
   }, [bibleVersion, bibleReference])
 
@@ -32,13 +33,9 @@ const BibleScreen: React.FC = (props) => {
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
         await CommandService.showText(`${bibleText} (${referenceString})`)
       } else {
-        handleVerseNotFound()
+        setWarningMessage('Versículo não encontrado')
       }
     }
-  }
-
-  function handleVerseNotFound() {
-    setBibleText('Versículo não encontrado')
   }
 
   function handleOpenBibleVersionsManager() {
@@ -62,7 +59,8 @@ const BibleScreen: React.FC = (props) => {
         setBibleReference(reference)
         setBibleText(text)
       } else {
-        handleVerseNotFound()
+        const referenceString = BibleService.bibleReferenceToString(bibleReference)
+        setWarningMessage(`Não há versículos posteriores a ${referenceString}`)
       }
     }
   }
@@ -75,7 +73,8 @@ const BibleScreen: React.FC = (props) => {
         setBibleReference(reference)
         setBibleText(text)
       } else {
-        handleVerseNotFound()
+        const referenceString = BibleService.bibleReferenceToString(bibleReference)
+        setWarningMessage(`Não há versículos anteriores a ${referenceString}`)
       }
     }
   }
@@ -89,11 +88,18 @@ const BibleScreen: React.FC = (props) => {
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
         />
-        {bibleText && (
-          <BibleTextContainer>
-            <BibleText>{bibleText}</BibleText>
-          </BibleTextContainer>
-        )}
+        <ContentContainer>
+          {bibleText && (
+            <BibleTextContainer>
+              <BibleText>{bibleText}</BibleText>
+            </BibleTextContainer>
+          )}
+          {warningMessage && (
+            <WarningContainer>
+              <WarningText>{warningMessage}</WarningText>
+            </WarningContainer>
+          )}
+        </ContentContainer>
       </Container>
       <FloatActionButton
         icon='MaterialIcons/navigate-before'

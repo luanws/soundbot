@@ -15,7 +15,6 @@ export interface Colors {
 
     background: string
     containerBackground: string
-    containerBackgroundColored: string
     divider: string
     unfocused: string
     unfocusedIcon: string
@@ -33,6 +32,11 @@ export interface Colors {
     info: string
     warning: string
     danger: string
+
+    successContainer: string
+    infoContainer: string
+    warningContainer: string
+    dangerContainer: string
     
     icon: string
     
