@@ -6,7 +6,7 @@ import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
 import FloatActionButton from '../../components/FloatActionButton'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import usePersistedState from '../../hooks/persisted-state'
-import { Bible, BibleReference } from '../../models/bible'
+import { BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
 import { CommandService } from '../../services/command'
 import { BibleText, BibleTextContainer, Container } from './styles'
@@ -16,26 +16,29 @@ const BibleScreen: React.FC = (props) => {
 
   const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
 
-  const [bible, setBible] = useState<Bible | undefined>()
   const [bibleVersion, setBibleVersion] = usePersistedState<string>('bible-version-selected', 'ARA')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
   const [bibleText, setBibleText] = useState<string>('')
 
   useEffect(() => {
-    BibleService.getBible(bibleVersion).then(setBible)
-  }, [bibleVersion])
-
-  useEffect(() => {
     updateBibleText()
-  }, [bible, bibleReference])
+  }, [bibleVersion, bibleReference])
 
   async function updateBibleText() {
-    if (bible && bibleReference) {
-      const bibleText = await BibleService.getTextFromBible(bible, bibleReference)
-      setBibleText(bibleText)
-      const referenceString = BibleService.bibleReferenceToString(bibleReference)
-      await CommandService.showText(`${bibleText} (${referenceString})`)
+    if (bibleVersion && bibleReference) {
+      const bibleText = await BibleService.getTextFromBible(bibleVersion, bibleReference)
+      if (bibleText) {
+        setBibleText(bibleText)
+        const referenceString = BibleService.bibleReferenceToString(bibleReference)
+        await CommandService.showText(`${bibleText} (${referenceString})`)
+      } else {
+        handleVerseNotFound()
+      }
     }
+  }
+
+  function handleVerseNotFound() {
+    setBibleText('Versículo não encontrado')
   }
 
   function handleOpenBibleVersionsManager() {
@@ -52,18 +55,28 @@ const BibleScreen: React.FC = (props) => {
   }
 
   async function handleNextVerse() {
-    if (bible && bibleReference) {
-      const { reference, text } = await BibleService.getNextVerse(bible, bibleReference)
-      setBibleReference(reference)
-      setBibleText(text)
+    if (bibleVersion && bibleReference) {
+      const nextVerse = await BibleService.getNextVerse(bibleVersion, bibleReference)
+      if (nextVerse) {
+        const { reference, text } = nextVerse
+        setBibleReference(reference)
+        setBibleText(text)
+      } else {
+        handleVerseNotFound()
+      }
     }
   }
 
   async function handlePreviousVerse() {
-    if (bible && bibleReference) {
-      const previousVerse = await BibleService.getPreviousVerse(bible, bibleReference)
-      setBibleReference(previousVerse.reference)
-      setBibleText(previousVerse.text)
+    if (bibleVersion && bibleReference) {
+      const previousVerse = await BibleService.getPreviousVerse(bibleVersion, bibleReference)
+      if (previousVerse) {
+        const { reference, text } = previousVerse
+        setBibleReference(reference)
+        setBibleText(text)
+      } else {
+        handleVerseNotFound()
+      }
     }
   }
 
@@ -97,9 +110,9 @@ const BibleScreen: React.FC = (props) => {
         animationType='slide'
         onRequestClose={() => setBibleReferenceSelectorIsVisible(false)}
       >
-        {!!bible && (
+        {!!bibleVersion && (
           <BibleReferenceSelector
-            bible={bible}
+            bibleVersion={bibleVersion}
             onSelectReference={handleSelectReference}
           />
         )}

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { BibleDAO } from "../database/dao/bible"
-import { Bible, BibleReference, BibleVerse } from "../models/bible"
+import { BibleReference, BibleVerse } from "../models/bible"
 
 export namespace BibleService {
     const availableVersionsURL = 'https://raw.githubusercontent.com/luanws/bible-database/main/data/available_versions.json'
@@ -43,14 +43,27 @@ export namespace BibleService {
         return await BibleDAO.getVersions()
     }
 
-    export async function getBible(version: string): Promise<Bible> {
-        return await BibleDAO.getBible(version)
+    export async function getTextFromBible(version: string, reference: BibleReference): Promise<string | undefined> {
+        const { bookName, chapterNumber, verseNumber } = reference
+        const bookNumber = allBookNames.indexOf(bookName) + 1
+        const text = await BibleDAO.getText(version, bookNumber, chapterNumber, verseNumber)
+        return text
     }
 
-    export async function getTextFromBible(bible: Bible, reference: BibleReference): Promise<string> {
-        const { bookName, chapterNumber, verseNumber } = reference
-        const bookIndex = allBookNames.indexOf(bookName)
-        return bible[bookIndex][chapterNumber - 1][verseNumber - 1]
+    function range(start: number, end: number): number[] {
+        return Array(end - start + 1).fill(0).map((_, idx) => start + idx)
+    }
+
+    export async function getChapterNumbersFromBook(version: string, bookName: string): Promise<number[]> {
+        const bookNumber = getBookNumberOfBookName(bookName)
+        const numberOfChapters = await BibleDAO.getNumberOfChaptersFromBook(version, bookNumber)
+        return range(1, numberOfChapters)
+    }
+
+    export async function getVerseNumbersFromChapter(version: string, bookName: string, chapterNumber: number): Promise<number[]> {
+        const bookNumber = getBookNumberOfBookName(bookName)
+        const numberOfVerses = await BibleDAO.getNumberOfVersesFromChapter(version, bookNumber, chapterNumber)
+        return range(1, numberOfVerses)
     }
 
     export function bibleReferenceToString(reference: BibleReference): string {
@@ -65,19 +78,20 @@ export namespace BibleService {
         return allBookNames.indexOf(bookName)
     }
 
-    export async function getVerseFromBible(bible: Bible, reference: BibleReference): Promise<BibleVerse> {
-        const text = await getTextFromBible(bible, reference)
-        return {
-            reference,
-            text
-        }
+    export function getBookNumberOfBookName(bookName: string): number {
+        return getIndexOfBookName(bookName) + 1
     }
 
-    export async function getNextVerse(bible: Bible, reference: BibleReference): Promise<BibleVerse> {
-        return await getVerseFromBible(bible, { ...reference, verseNumber: reference.verseNumber + 1 })
+    export async function getVerseFromBible(version: string, reference: BibleReference): Promise<BibleVerse | undefined> {
+        const text = await getTextFromBible(version, reference)
+        return text ? { reference, text } : undefined
     }
 
-    export async function getPreviousVerse(bible: Bible, reference: BibleReference): Promise<BibleVerse> {
-        return await getVerseFromBible(bible, { ...reference, verseNumber: reference.verseNumber - 1 })
+    export async function getNextVerse(version: string, reference: BibleReference): Promise<BibleVerse | undefined> {
+        return await getVerseFromBible(version, { ...reference, verseNumber: reference.verseNumber + 1 })
+    }
+
+    export async function getPreviousVerse(version: string, reference: BibleReference): Promise<BibleVerse | undefined> {
+        return await getVerseFromBible(version, { ...reference, verseNumber: reference.verseNumber - 1 })
     }
 }

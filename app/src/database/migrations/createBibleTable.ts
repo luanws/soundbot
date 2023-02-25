@@ -9,8 +9,12 @@ export const createBibleTable: Migration = {
                 tx.executeSql(`
                     CREATE TABLE IF NOT EXISTS bibles (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        version TEXT NOT NULL UNIQUE,
-                        bible TEXT NOT NULL
+                        version TEXT NOT NULL,
+                        book_number INTEGER NOT NULL,
+                        chapter_number INTEGER NOT NULL,
+                        verse_number INTEGER NOT NULL,
+                        text TEXT NOT NULL,
+                        UNIQUE (version, book_number, chapter_number, verse_number)
                     );
                 `)
             }, reject, resolve)

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { SceneMap, TabBar } from 'react-native-tab-view'
 import { useTheme } from '../../../hooks/theme'
-import { Bible, BibleReference } from '../../../models/bible'
+import { BibleReference } from '../../../models/bible'
 import { BibleService } from '../../../services/bible'
 import BookSelector from './BookSelector'
 import NumberSelector from './NumberSelector'
@@ -11,17 +11,13 @@ import { TabViewStyled } from './styles'
 
 interface Props {
   onSelectReference?(reference: BibleReference): void
-  bible: Bible
+  bibleVersion: string
 }
 
 const allBookNames = BibleService.getAllBookNames()
 
-function range(start: number, end: number): number[] {
-  return Array(end - start + 1).fill(0).map((_, idx) => start + idx)
-}
-
 const BibleReferenceSelector: React.FC<Props> = (props) => {
-  const { onSelectReference, bible } = props
+  const { onSelectReference, bibleVersion } = props
 
   const layout = useWindowDimensions()
   const theme = useTheme()
@@ -37,22 +33,22 @@ const BibleReferenceSelector: React.FC<Props> = (props) => {
     { key: 'verse', title: 'Versículo' }
   ])
 
-  function handleSelectBookName(bookName: string) {
+  async function handleSelectBookName(bookName: string) {
     setTabIndex(1)
     setBookName(bookName)
-    const bookIndex = BibleService.getIndexOfBookName(bookName)
-    setChapterNumbers(range(1, bible[bookIndex].length))
+    const chapterNumbers = await BibleService.getChapterNumbersFromBook(bibleVersion, bookName)
+    setChapterNumbers(chapterNumbers)
   }
 
-  function handleSelectChapterNumber(chapterNumber: number) {
+  async function handleSelectChapterNumber(chapterNumber: number) {
     if (!bookName) {
       setTabIndex(0)
       return
     }
     setTabIndex(2)
     setChapterNumber(chapterNumber)
-    const bookIndex = BibleService.getIndexOfBookName(bookName)
-    setVerseNumbers(range(1, bible[bookIndex][chapterNumber - 1].length))
+    const verseNumbers = await BibleService.getVerseNumbersFromChapter(bibleVersion, bookName, chapterNumber)
+    setVerseNumbers(verseNumbers)
   }
 
   function handleSelectVerseNumber(verseNumber: number) {

@@ -1,5 +1,4 @@
 export type Bible = string[][][]
-export type Bibles = { [key: string]: Bible }
 
 export interface BibleReference {
     bookName: string
