@@ -21,7 +21,6 @@ const BarCodeScannerModal: React.ForwardRefRenderFunction<BarCodeScannerModalRef
     hide: () => setVisible(false),
   }))
 
-
   return (
     <Modal
       visible={visible}
@@ -33,7 +32,7 @@ const BarCodeScannerModal: React.ForwardRefRenderFunction<BarCodeScannerModalRef
           onBarCodeScanned={({ data }) => onBarCodeScanned(data)}
         />
         <ScanIcon name='scan-helper'>
-          
+
         </ScanIcon>
       </Container>
     </Modal>

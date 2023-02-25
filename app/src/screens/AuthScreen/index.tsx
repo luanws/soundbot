@@ -1,3 +1,4 @@
+import * as BarCodeScanner from 'expo-barcode-scanner'
 import React, { useRef } from 'react'
 import { ScrollView } from 'react-native'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
@@ -14,7 +15,9 @@ const AuthScreen: React.FC<Props> = (props) => {
 
   const barCodeScannerModalRef = useRef<BarCodeScannerModalReference>(null)
 
-  function handleScanQRCodeButtonPress() {
+  async function handleScanQRCodeButtonPress() {
+    const { status } = await BarCodeScanner.requestPermissionsAsync()
+    if (status !== 'granted') handleScanQRCodeButtonPress()
     barCodeScannerModalRef.current?.show()
   }
 
