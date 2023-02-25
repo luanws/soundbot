@@ -6,7 +6,7 @@ export namespace BibleDAO {
         return new Promise<void>((resolve, reject) => {
             db.transaction(tx => {
                 bible.forEach((book, bookIndex) => {
-                    if (progressCallback) progressCallback(bookIndex / bible.length)
+                    if (progressCallback) progressCallback((bookIndex + 1) / bible.length)
                     book.forEach((chapter, chapterIndex) => {
                         chapter.forEach((text, verseIndex) => {
                             const bookNumber = bookIndex + 1

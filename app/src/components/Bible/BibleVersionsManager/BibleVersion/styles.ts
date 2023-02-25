@@ -61,3 +61,9 @@ export const DeleteButtonIcon = styled(MaterialIcons)`
     font-size: 20px;
     color: ${({ theme }) => theme.colors.danger};
 `
+
+export const DownloadingContainer = styled(View)`
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+`

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { ActivityIndicator } from 'react-native'
 import { BibleService } from '../../../../services/bible'
 
 import {
-  Container, DeleteButton, DeleteButtonIcon, DownloadButton, DownloadButtonIcon, DownloadButtonText, DownloadedContainer, SelectedButtonText, SelectedIcon, VersionNameText
+  Container, DeleteButton, DeleteButtonIcon, DownloadButton, DownloadButtonIcon, DownloadButtonText, DownloadedContainer, DownloadingContainer, SelectedButtonText, SelectedIcon, VersionNameText
 } from './styles'
 
 interface Props {
@@ -17,8 +18,13 @@ interface Props {
 const BibleVersion: React.FC<Props> = (props) => {
   const { version, available, onDownloadPress, onDeletePress, onVersionSelect, selected } = props
 
+  const [progress, setProgress] = useState<number>(1)
+
+  const isDownloading = progress < 1
+
   async function handleDownload() {
-    await BibleService.downloadVersion(version)
+    setProgress(0)
+    await BibleService.downloadVersion(version, setProgress)
     if (onDownloadPress) onDownloadPress(version)
   }
 
@@ -50,10 +56,18 @@ const BibleVersion: React.FC<Props> = (props) => {
           </DeleteButton>
         </DownloadedContainer>
       ) : (
-        <DownloadButton onPress={handleDownload}>
-          <DownloadButtonText>Baixar</DownloadButtonText>
-          <DownloadButtonIcon name="download" />
-        </DownloadButton>
+        <>
+          {isDownloading ? (
+            <DownloadingContainer>
+              <ActivityIndicator size="small" color="#fff" />
+            </DownloadingContainer>
+          ) : (
+            <DownloadButton onPress={handleDownload}>
+              <DownloadButtonText>Baixar</DownloadButtonText>
+              <DownloadButtonIcon name="download" />
+            </DownloadButton>
+          )}
+        </>
       )}
     </Container>
   )

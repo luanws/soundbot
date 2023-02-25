@@ -30,9 +30,9 @@ export namespace BibleService {
         return response.data
     }
 
-    export async function downloadVersion(version: string) {
+    export async function downloadVersion(version: string, progressCallback?: (progress: number) => void) {
         const bible = await getBibleOnline(version)
-        await BibleDAO.create(version, bible)
+        await BibleDAO.create(version, bible, progressCallback)
     }
 
     export async function deleteVersion(version: string) {
