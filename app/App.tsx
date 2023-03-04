@@ -8,6 +8,8 @@ import { DatabaseUtils } from "./src/database/utils"
 import AppProvider from "./src/hooks"
 import { useTheme } from "./src/hooks/theme"
 import Routes from "./src/routes"
+import './src/utils/prototype/string'
+
 
 async function runOnStartup() {
   await Migrations.runMigrations()
