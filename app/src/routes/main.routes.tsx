@@ -4,7 +4,7 @@ import { useTheme } from '../hooks/theme'
 import BibleScreen from '../screens/BibleScreen'
 import HomeScreen from '../screens/HomeScreen'
 import SettingsScreen from '../screens/SettingsScreen'
-import { Theme } from '../utils/theme/theme.model'
+import { Theme } from '../theme/theme.model'
 import DrawerIcon from './components/DrawerIcon'
 
 export type MainDrawerParamList = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from '../../../components/Icon'
 import { useTheme } from '../../../hooks/theme'
-import { Theme } from '../../../utils/theme/theme.model'
+import { Theme } from '../../../theme/theme.model'
 
 
 interface Props {
