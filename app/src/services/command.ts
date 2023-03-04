@@ -8,4 +8,12 @@ export namespace CommandService {
     export async function hideText(): Promise<void> {
         await api.post('/command/hide_text')
     }
+
+    export async function playVideo(params: { dirname: string, filename: string }): Promise<void> {
+        await api.post('/command/play_video', params)
+    }
+
+    export async function stopVideo(): Promise<void> {
+        await api.post('/command/stop_video')
+    }
 }
