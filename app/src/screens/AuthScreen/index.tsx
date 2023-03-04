@@ -7,10 +7,7 @@ import { useAuth } from '../../hooks/auth'
 import Section from './Section'
 import { Container, ScanQRCodeButton, ScanQRCodeButtonText } from './styles'
 
-interface Props {
-}
-
-const AuthScreen: React.FC<Props> = (props) => {
+const AuthScreen: React.FC = (props) => {
   const { setApiAddress } = useAuth()
 
   const barCodeScannerModalRef = useRef<BarCodeScannerModalReference>(null)

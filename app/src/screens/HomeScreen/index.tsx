@@ -7,10 +7,7 @@ import NavigateButton from './NavigateButton'
 import { Container, NavigationButtonsContainer, Scroll } from './styles'
 import UpdateCheckerCard from './UpdateCheckerCard'
 
-interface Props {
-}
-
-const HomeScreen: React.FC<Props> = (props) => {
+const HomeScreen: React.FC = (props) => {
   const navigation = useNavigation<NavigationProp<MainDrawerParamList>>()
   const { clearApiAddress } = useAuth()
 
