@@ -38,7 +38,7 @@ const Card: CardType = (props: Props) => {
               <ContainerIcon>
                 <Icon
                   icon={icon}
-                  color={theme.colors.title}
+                  color={theme.colors.card.title}
                 />
               </ContainerIcon>
             )}

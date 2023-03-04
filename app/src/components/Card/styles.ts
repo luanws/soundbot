@@ -4,7 +4,7 @@ import { styled } from "../../hooks/theme"
 export const Container = styled(TouchableOpacity)`
     margin: 8px 1px;
     border-radius: 5px;
-    background-color: ${({ theme }) => theme.colors.containerBackground};
+    background-color: ${({ theme }) => theme.colors.card.background};
 `
 
 export const Content = styled(View)`
@@ -14,7 +14,7 @@ export const Content = styled(View)`
 
 export const Title = styled(Text)`
     font-weight: bold;
-    color: ${({ theme }) => theme.colors.title};
+    color: ${({ theme }) => theme.colors.card.title};
 `
 
 export const ContainerTitle = styled(View)`
@@ -24,7 +24,7 @@ export const ContainerTitle = styled(View)`
 `
 
 export const Header = styled(View)`
-    border-bottom-color: ${({ theme }) => theme.colors.divider};
+    border-bottom-color: ${({ theme }) => theme.colors.card.divider};
     border-bottom-width: 1px;
     margin-bottom: 8px;
 `
@@ -51,17 +51,17 @@ export const CardComponents = {
         margin-bottom: -8px;
     `,
     Text: styled(Text)`
-        color: ${({ theme }) => theme.colors.text2};
+        color: ${({ theme }) => theme.colors.card.text};
         margin-bottom: 8px
     `,
     Button: styled(TouchableOpacity)`
-        background-color: ${({ theme }) => theme.colors.primary};
+        background-color: ${({ theme }) => theme.colors.card.button};
         padding: 16px;
         border-radius: 5px;
         margin: 8px 0px;
     `,
     ButtonText: styled(Text)`
-        color: white;
+        color: ${({ theme }) => theme.colors.card.buttonText};
         font-size: 14px;
         text-transform: uppercase;
         text-align: center;

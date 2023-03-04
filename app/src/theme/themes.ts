@@ -42,6 +42,15 @@ export const themes: { [key in ThemeTypes]: Theme } = {
 
             icon: '#444',
 
+            card: {
+                background: '#fff',
+                button: '#33932e',
+                buttonText: '#fff',
+                text: 'gray',
+                title: '#205f1d',
+                divider: '#E5E5E5',
+            },
+
             actionBar: {
                 background: '#fff',
                 text: '#444'
@@ -94,6 +103,15 @@ export const themes: { [key in ThemeTypes]: Theme } = {
             dangerContainer: '#3c1919',
 
             icon: '#fff',
+
+            card: {
+                background: '#2E2E34',
+                button: '#33932e',
+                buttonText: '#fff',
+                text: 'gray',
+                title: '#4adf44',
+                divider: '#777',
+            },
 
             actionBar: {
                 background: '#2E2E34',

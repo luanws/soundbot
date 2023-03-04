@@ -40,6 +40,15 @@ export interface Colors {
     
     icon: string
     
+    card: {
+        background: string
+        button: string
+        buttonText: string
+        text: string
+        title: string
+        divider: string
+    }
+
     actionBar: {
         background: string
         text: string
