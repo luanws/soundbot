@@ -79,7 +79,7 @@ export const themes: { [key in ThemeTypes]: Theme } = {
 
             background: '#1F1E1F',
             containerBackground: '#2E2E34',
-            divider: '#777',
+            divider: '#444',
             unfocused: "#777",
             unfocusedIcon: "#aaa",
             focused: "#3e9fff",
