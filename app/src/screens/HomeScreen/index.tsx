@@ -27,6 +27,11 @@ const HomeScreen: React.FC = (props) => {
         <UpdateCheckerCard />
         <NavigationButtonsContainer>
           <NavigateButton
+            icon='Ionicons/musical-notes'
+            title='Hinário'
+            onPress={() => navigation.navigate('Hymnbook')}
+          />
+          <NavigateButton
             icon='FontAwesome5/bible'
             title='Bíblia'
             onPress={() => navigation.navigate('Bible')}

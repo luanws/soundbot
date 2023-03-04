@@ -3,6 +3,7 @@ import React from 'react'
 import { useTheme } from '../hooks/theme'
 import BibleScreen from '../screens/BibleScreen'
 import HomeScreen from '../screens/HomeScreen'
+import HymnbookScreen from '../screens/HymnbookScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import { Theme } from '../theme/theme.model'
 import DrawerIcon from './components/DrawerIcon'
@@ -10,6 +11,7 @@ import DrawerIcon from './components/DrawerIcon'
 export type MainDrawerParamList = {
   Home: undefined
   Bible: undefined
+  Hymnbook: undefined
   Settings: undefined
 }
 
@@ -53,6 +55,17 @@ const MainRoutes: React.FC = () => {
           title: 'Início',
           drawerIcon: (props) => (
             <DrawerIcon icon='MaterialIcons/home' {...props} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name='Hymnbook'
+        component={HymnbookScreen}
+        options={{
+          title: 'Hinário',
+          drawerIcon: (props) => (
+            <DrawerIcon icon='Ionicons/musical-notes' {...props} />
           ),
         }}
       />
