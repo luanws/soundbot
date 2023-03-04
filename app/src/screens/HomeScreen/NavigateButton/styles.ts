@@ -8,7 +8,6 @@ const itemSize = width / numberOfColumns - padding * 2 / numberOfColumns
 
 export const Container = styled(View)`
     background-color: ${({ theme }) => theme.colors.background};
-    border-color: ${({ theme }) => theme.colors.background};
     align-items: center;
     justify-content: center;
     height: ${itemSize}px;
