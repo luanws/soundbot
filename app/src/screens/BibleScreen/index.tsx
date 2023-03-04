@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from 'react-native'
 import BibleBar from '../../components/Bible/BibleBar'
 import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
@@ -19,6 +20,12 @@ const BibleScreen: React.FC = (props) => {
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
   const [bibleText, setBibleText] = useState<string>('')
   const [warningMessage, setWarningMessage] = useState<string | null>(null)
+
+  useFocusEffect(useCallback(() => {
+    return () => {
+      CommandService.hideText()
+    }
+  }, []))
 
   useEffect(() => {
     setWarningMessage(null)
