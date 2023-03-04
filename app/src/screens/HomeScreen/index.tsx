@@ -1,14 +1,17 @@
-import { useNavigation } from '@react-navigation/native'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import React, { useEffect } from 'react'
-import { Text, View } from 'react-native'
 import Menu from '../../components/Menu'
 import { useAuth } from '../../hooks/auth'
+import { MainDrawerParamList } from '../../routes/main.routes'
+import NavigateButton from './NavigateButton'
+import { Container, NavigationButtonsContainer, Scroll } from './styles'
+import UpdateCheckerCard from './UpdateCheckerCard'
 
 interface Props {
 }
 
 const HomeScreen: React.FC<Props> = (props) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationProp<MainDrawerParamList>>()
   const { clearApiAddress } = useAuth()
 
   useEffect(() => {
@@ -22,9 +25,23 @@ const HomeScreen: React.FC<Props> = (props) => {
   }, [])
 
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <Scroll>
+      <Container>
+        <UpdateCheckerCard />
+        <NavigationButtonsContainer>
+          <NavigateButton
+            icon='FontAwesome5/bible'
+            title='Bíblia'
+            onPress={() => navigation.navigate('Bible')}
+          />
+          <NavigateButton
+            icon='MaterialIcons/settings'
+            title='Configurações'
+            onPress={() => navigation.navigate('Settings')}
+          />
+        </NavigationButtonsContainer>
+      </Container>
+    </Scroll>
   )
 }
 
