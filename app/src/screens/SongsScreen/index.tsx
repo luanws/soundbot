@@ -1,16 +1,24 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, Text } from 'react-native'
+import { FileTree } from '../../models/file-tree'
+import { SongService } from '../../services/song'
 
-// import styles from './styles'
+const SongsScreen: React.FC = (props) => {
+  const [songs, setSongs] = useState<FileTree | null>(null)
 
-interface Props {
-}
+  useEffect(() => {
+    updateSongs()
+  }, [])
 
-const SongsScreen: React.FC<Props> = (props) => {
+  async function updateSongs() {
+    const songs = await SongService.getSongs()
+    setSongs(songs)
+  }
+
   return (
-    <View>
-      <Text>SongsScreen</Text>
-    </View>
+    <ScrollView>
+      <Text>{JSON.stringify(songs, null, 2)}</Text>
+    </ScrollView>
   )
 }
 
