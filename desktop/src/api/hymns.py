@@ -14,4 +14,7 @@ class HymnsResource(Resource):
         video_path = self.video_path_settings.hymns
         filenames = get_all_filenames_from_path(video_path)
         print(f'Found {len(filenames)} files in {video_path}')
-        return filenames
+        return {
+            'dirname': video_path,
+            'filenames': filenames,
+        }
