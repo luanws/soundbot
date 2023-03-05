@@ -9,7 +9,7 @@ import { PlayModalContainer, PlayModalText } from './styles'
 
 
 const HymnbookScreen: React.FC = (props) => {
-  const playModalRef = useRef<GestureModalRef>(null)
+  const playerModalRef = useRef<GestureModalRef>(null)
 
   const [hymns, setHymns] = useState<string[]>([])
   const [playingHymn, setPlayingHymn] = useState<string | null>(null)
@@ -26,8 +26,8 @@ const HymnbookScreen: React.FC = (props) => {
   }, [hymns, searchText])
 
   useEffect(() => {
-    if (playingHymn) playModalRef.current?.open()
-    else playModalRef.current?.close()
+    if (playingHymn) playerModalRef.current?.open()
+    else playerModalRef.current?.close()
   }, [playingHymn])
 
   function filterHymns(hymns: string[], searchText: string): string[] {
@@ -66,7 +66,7 @@ const HymnbookScreen: React.FC = (props) => {
         onClear={() => setSearchText('')}
       />
       <GestureModal
-        ref={playModalRef}
+        ref={playerModalRef}
         onClose={handleStopHymn}
         closeOnOverlayTap={false}
         onBackButtonPress={() => true}

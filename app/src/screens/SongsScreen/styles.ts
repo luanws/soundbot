@@ -21,3 +21,15 @@ export const FileTreeCurrentPathText = styled(Text)`
     color: ${({ theme }) => theme.colors.info};
     font-size: 16px;
 `
+
+export const PlayModalContainer = styled(View)`
+    padding: 16px 0px;
+`
+
+export const PlayModalText = styled(Text)`
+    color: ${({ theme }) => theme.colors.info};
+    font-size: 18px;
+    font-weight: 500;
+    padding: 2px 16px;
+    padding-bottom: 0px;
+`

@@ -1,19 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BackHandler } from 'react-native'
+import VideoCell from '../../components/Cell/VideoCell'
+import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import FileTreeList from '../../components/List/FileTreeList'
 import { FileTree } from '../../models/file-tree'
 import { CommandService } from '../../services/command'
 import { SongService } from '../../services/song'
-import { Container, Divider, FileTreeContainer, FileTreeCurrentPathContainer, FileTreeCurrentPathText } from './styles'
+import { Divider, FileTreeContainer, FileTreeCurrentPathContainer, FileTreeCurrentPathText, PlayModalContainer, PlayModalText } from './styles'
 
 const SongsScreen: React.FC = (props) => {
+  const playerModalRef = useRef<GestureModalRef>(null)
+
   const [rootFileTree, setRootFileTree] = useState<FileTree | null>(null)
   const [selectedFileTree, setSelectedFileTree] = useState<FileTree | null>(null)
   const [stackFileTree, setStackFileTree] = useState<FileTree[]>([])
+  const [playingSong, setPlayingSong] = useState<string | null>(null)
 
   useEffect(() => {
     updateSongs()
   }, [])
+
+  useEffect(() => {
+    if (playingSong) playerModalRef.current?.open()
+    else playerModalRef.current?.close()
+  }, [playingSong])
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -51,11 +61,17 @@ const SongsScreen: React.FC = (props) => {
         dirname: fileTree.dirname,
         filename: fileTree.name,
       })
+      setPlayingSong(fileTree.name)
     }
   }
 
+  async function handleStopSong() {
+    await CommandService.stopVideo()
+    setPlayingSong(null)
+  }
+
   return (
-    <Container>
+    <>
       {rootFileTree && selectedFileTree && (
         <>
           <FileTreeCurrentPathContainer>
@@ -72,7 +88,22 @@ const SongsScreen: React.FC = (props) => {
           </FileTreeContainer>
         </>
       )}
-    </Container>
+      <GestureModal
+        ref={playerModalRef}
+        onClose={handleStopSong}
+        closeOnOverlayTap={false}
+        onBackButtonPress={() => true}
+        panGestureEnabled={false}
+        withHandle={false}
+      >
+        {playingSong && (
+          <PlayModalContainer>
+            <PlayModalText>Reproduzindo</PlayModalText>
+            <VideoCell filename={playingSong} playing onPress={handleStopSong} />
+          </PlayModalContainer>
+        )}
+      </GestureModal>
+    </>
   )
 }
 
