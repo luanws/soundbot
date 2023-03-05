@@ -1,13 +1,14 @@
 import React, { memo } from 'react'
-import { Container, HymnInfoContainer, HymnNameText, HymnNumberText, PlayButton, PlayButtonContainer, PlayButtonIcon, PlayButtonText } from './styles'
+import { Container, HymnInfoContainer, HymnNameText, HymnNumberText, Button, ButtonContainer, PlayButtonIcon, ButtonText, StopButtonIcon } from './styles'
 
 interface Props {
   hymn: string
   onPress?(hymn: string): void
+  playing?: boolean
 }
 
 const HymnCell: React.FC<Props> = (props) => {
-  const { hymn, onPress } = props
+  const { hymn, onPress, playing } = props
 
   const hymnNumber = hymn.replace(/-.*/, '')
   const hymnName = hymn.replace(/.*- /, '').replace(/\.mp4$/, '')
@@ -18,12 +19,21 @@ const HymnCell: React.FC<Props> = (props) => {
         <HymnNumberText>{hymnNumber}</HymnNumberText>
         <HymnNameText>{hymnName}</HymnNameText>
       </HymnInfoContainer>
-      <PlayButtonContainer>
-        <PlayButton activeOpacity={0.7} onPress={() => onPress?.(hymn)}>
-          <PlayButtonText>Iniciar</PlayButtonText>
-          <PlayButtonIcon name='controller-play' />
-        </PlayButton>
-      </PlayButtonContainer>
+      <ButtonContainer>
+        <Button activeOpacity={0.7} onPress={() => onPress?.(hymn)}>
+          {playing ? (
+            <>
+              <ButtonText>Parar</ButtonText>
+              <StopButtonIcon name='controller-stop' />
+            </>
+          ) : (
+            <>
+              <ButtonText>Iniciar</ButtonText>
+              <PlayButtonIcon name='controller-play' />
+            </>
+          )}
+        </Button>
+      </ButtonContainer>
     </Container>
   )
 }

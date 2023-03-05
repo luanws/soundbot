@@ -26,13 +26,13 @@ export const HymnNameText = styled(Text)`
     padding: 4px;
 `
 
-export const PlayButtonContainer = styled(View)`
+export const ButtonContainer = styled(View)`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
 `
 
-export const PlayButton = styled(TouchableOpacity)`
+export const Button = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -41,12 +41,18 @@ export const PlayButton = styled(TouchableOpacity)`
     padding: 8px 12px;
 `
 
+export const ButtonText = styled(Text)`
+    color: ${({ theme }) => theme.colors.text1};
+`
+
 export const PlayButtonIcon = styled(Entypo)`
     color: ${({ theme }) => theme.colors.success};
     font-size: 20px;
     margin-left: 4px;
 `
 
-export const PlayButtonText = styled(Text)`
-    color: ${({ theme }) => theme.colors.text1};
+export const StopButtonIcon = styled(Entypo)`
+    color: ${({ theme }) => theme.colors.danger};
+    font-size: 20px;
+    margin-left: 4px;
 `
