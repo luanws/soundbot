@@ -5,13 +5,15 @@ import BibleScreen from '../screens/BibleScreen'
 import HomeScreen from '../screens/HomeScreen'
 import HymnbookScreen from '../screens/HymnbookScreen'
 import SettingsScreen from '../screens/SettingsScreen'
+import SongsScreen from '../screens/SongsScreen'
 import { Theme } from '../theme/theme.model'
 import DrawerIcon from './components/DrawerIcon'
 
 export type MainDrawerParamList = {
   Home: undefined
-  Bible: undefined
   Hymnbook: undefined
+  Songs: undefined
+  Bible: undefined
   Settings: undefined
 }
 
@@ -60,6 +62,17 @@ const MainRoutes: React.FC = () => {
       />
 
       <Drawer.Screen
+        name='Bible'
+        component={BibleScreen}
+        options={{
+          title: 'Bíblia',
+          drawerIcon: (props) => (
+            <DrawerIcon icon='FontAwesome5/bible' {...props} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
         name='Hymnbook'
         component={HymnbookScreen}
         options={{
@@ -71,12 +84,12 @@ const MainRoutes: React.FC = () => {
       />
 
       <Drawer.Screen
-        name='Bible'
-        component={BibleScreen}
+        name='Songs'
+        component={SongsScreen}
         options={{
-          title: 'Bíblia',
+          title: 'Músicas',
           drawerIcon: (props) => (
-            <DrawerIcon icon='FontAwesome5/bible' {...props} />
+            <DrawerIcon icon='Entypo/folder-music' {...props} />
           ),
         }}
       />

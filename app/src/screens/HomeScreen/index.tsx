@@ -27,14 +27,19 @@ const HomeScreen: React.FC = (props) => {
         <UpdateCheckerCard />
         <NavigationButtonsContainer>
           <NavigateButton
+            icon='FontAwesome5/bible'
+            title='Bíblia'
+            onPress={() => navigation.navigate('Bible')}
+          />
+          <NavigateButton
             icon='Ionicons/musical-notes'
             title='Hinário'
             onPress={() => navigation.navigate('Hymnbook')}
           />
           <NavigateButton
-            icon='FontAwesome5/bible'
-            title='Bíblia'
-            onPress={() => navigation.navigate('Bible')}
+            icon='Entypo/folder-music'
+            title='Músicas'
+            onPress={() => navigation.navigate('Songs')}
           />
           <NavigateButton
             icon='MaterialIcons/settings'
