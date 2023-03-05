@@ -31,7 +31,7 @@ export const themes: { [key in ThemeTypes]: Theme } = {
             link: 'blue',
             
             success: "#00a152",
-            info: "#5bc0de",
+            info: "#0067dd",
             warning: "#b2a300",
             danger: "#ab003c",
             
@@ -93,7 +93,7 @@ export const themes: { [key in ThemeTypes]: Theme } = {
             link: 'deepskyblue',
             
             success: "#00e676",
-            info: "#5bc0de",
+            info: "#00c3ff",
             warning: "#ffea00",
             danger: "#f50057",
             
