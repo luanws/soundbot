@@ -16,7 +16,7 @@ export const VideoInfoContainer = styled(View)`
 
 
 export const VideoNameText = styled(Text)`
-    color: ${({ theme }) => theme.colors.text2};
+    color: ${({ theme }) => theme.colors.text1};
     font-size: 16px;
     padding: 4px;
 `

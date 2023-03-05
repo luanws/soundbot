@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, Text } from 'react-native'
+import FileTreeList from '../../components/List/FileTreeList'
 import { FileTree } from '../../models/file-tree'
 import { SongService } from '../../services/song'
 
 const SongsScreen: React.FC = (props) => {
   const [songs, setSongs] = useState<FileTree | null>(null)
+  const [selectedFileTree, setSelectedFileTree] = useState<FileTree | null>(null)
 
   useEffect(() => {
     updateSongs()
@@ -16,9 +17,14 @@ const SongsScreen: React.FC = (props) => {
   }
 
   return (
-    <ScrollView>
-      <Text>{JSON.stringify(songs, null, 2)}</Text>
-    </ScrollView>
+    <>
+      {songs && (
+        <FileTreeList
+          fileTree={songs.children}
+          onPress={setSelectedFileTree}
+        />
+      )}
+    </>
   )
 }
 
