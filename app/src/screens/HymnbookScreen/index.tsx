@@ -7,6 +7,7 @@ import { HymnService } from '../../services/hymn'
 
 const HymnbookScreen: React.FC = (props) => {
   const [hymns, setHymns] = useState<string[]>([])
+  const [hymnsDirname, setHymnsDirname] = useState<string>('')
   const [filteredHymns, setFilteredHymns] = useState<string[]>([])
   const [searchText, setSearchText] = useState<string>('')
 
@@ -25,13 +26,15 @@ const HymnbookScreen: React.FC = (props) => {
   }
 
   async function updateHymns() {
-    const hymns = await HymnService.getHymns()
+    const { dirname, filenames } = await HymnService.getHymns()
+    const hymns = filenames
     setHymns(hymns)
+    setHymnsDirname(dirname)
   }
 
   async function handleHymnPress(hymn: string) {
-    CommandService.playVideo({
-      dirname: '',
+    await CommandService.playVideo({
+      dirname: hymnsDirname,
       filename: hymn
     })
   }

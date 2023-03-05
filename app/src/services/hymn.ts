@@ -1,5 +1,10 @@
 import { api } from "../utils/api"
 
+interface HymnResponse {
+    dirname: string
+    filenames: string[]
+}
+
 export namespace HymnService {
     function sortHymns(hymns: string[]): string[] {
         return hymns.sort((a, b) => {
@@ -9,8 +14,9 @@ export namespace HymnService {
         })
     }
 
-    export async function getHymns(): Promise<string[]> {
+    export async function getHymns(): Promise<HymnResponse> {
         const { data } = await api.get('/hymns')
-        return sortHymns(data)
+        const { dirname, filenames } = data as HymnResponse
+        return { dirname, filenames: sortHymns(filenames) }
     }
 }
