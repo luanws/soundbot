@@ -33,12 +33,16 @@ def get_all_filenames_from_path(path: str) -> List[str]:
     return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
 
+def list_dir(path: str) -> List[str]:
+    return sorted(os.listdir(path), key=lambda f: os.path.isdir(os.path.join(path, f)), reverse=True)
+
+
 def get_file_tree_from_path(path: str) -> FileTree:
     name = os.path.basename(path)
     if os.path.isfile(path):
         return FileTree(type=FileTreeType.FILE, name=name, dirname=os.path.dirname(os.path.normpath(path)))
     else:
-        children = [get_file_tree_from_path(os.path.join(path, child)) for child in os.listdir(path)]
+        children = [get_file_tree_from_path(os.path.join(path, child)) for child in list_dir(path)]
         return FileTree(type=FileTreeType.DIRECTORY, name=name, dirname=os.path.normpath(path), children=children)
 
 
