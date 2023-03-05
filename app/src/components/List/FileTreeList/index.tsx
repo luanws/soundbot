@@ -11,13 +11,13 @@ interface Props {
 }
 
 const FileTreeList: React.FC<Props> = (props) => {
-  const { fileTree: _fileTree } = props
+  const { fileTree: _fileTree, onPress } = props
   const fileTree = Array.isArray(_fileTree) ? _fileTree : [_fileTree]
 
   const renderItem = (fileTree: FileTree) => {
     const { name, type } = fileTree
-    if (type === 'file') return <VideoCell filename={name} />
-    return <FolderCell directory={name} />
+    if (type === 'file') return <VideoCell filename={name} onPress={() => onPress?.(fileTree)} />
+    return <FolderCell directory={name} onPress={() => onPress?.(fileTree)} />
   }
 
   return (
