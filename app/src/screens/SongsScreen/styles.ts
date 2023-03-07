@@ -5,10 +5,11 @@ export const Container = styled(View)`
 `
 
 export const FileTreeContainer = styled(View)`
+    flex: 1;
 `
 
 export const FileTreeCurrentPathContainer = styled(View)`
-    padding: 16px;
+    padding: 8px 16px;
 `
 
 export const Divider = styled(View)`

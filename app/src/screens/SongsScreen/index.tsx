@@ -3,6 +3,7 @@ import { BackHandler } from 'react-native'
 import VideoCell from '../../components/Cell/VideoCell'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import FileTreeList from '../../components/List/FileTreeList'
+import SearchView from '../../components/Search/SearchView'
 import { FileTree } from '../../models/file-tree'
 import { CommandService } from '../../services/command'
 import { SongService } from '../../services/song'
@@ -14,6 +15,7 @@ const SongsScreen: React.FC = (props) => {
   const [rootFileTree, setRootFileTree] = useState<FileTree | null>(null)
   const [selectedFileTree, setSelectedFileTree] = useState<FileTree | null>(null)
   const [stackFileTree, setStackFileTree] = useState<FileTree[]>([])
+  const [filteredFileTree, setFilteredFileTree] = useState<FileTree[] | null>(null)
   const [playingSong, setPlayingSong] = useState<string | null>(null)
 
   useEffect(() => {
@@ -69,22 +71,37 @@ const SongsScreen: React.FC = (props) => {
     setPlayingSong(null)
   }
 
+  async function handleSearch(searchText: string) {
+    if (!selectedFileTree) return
+    if (!searchText) return setFilteredFileTree(null)
+    const filteredFileTree = SongService.searchSongs(selectedFileTree.children, searchText)
+    setFilteredFileTree(filteredFileTree)
+  }
+
   return (
     <>
       {rootFileTree && selectedFileTree && (
         <>
-          <FileTreeCurrentPathContainer>
-            <FileTreeCurrentPathText>
-              {dirnameToRelativePath(rootFileTree.dirname, selectedFileTree.dirname)}
-            </FileTreeCurrentPathText>
-          </FileTreeCurrentPathContainer>
-          <Divider />
-          <FileTreeContainer>
-            <FileTreeList
-              fileTree={selectedFileTree.children}
-              onPress={handleSelectFileTree}
-            />
-          </FileTreeContainer>
+          <SearchView
+            data={selectedFileTree.children}
+            renderList={(fileTree) => (
+              <>
+                <FileTreeCurrentPathContainer>
+                  <FileTreeCurrentPathText>
+                    {dirnameToRelativePath(rootFileTree.dirname, selectedFileTree.dirname)}
+                  </FileTreeCurrentPathText>
+                </FileTreeCurrentPathContainer>
+                <Divider />
+                <FileTreeContainer>
+                  <FileTreeList
+                    fileTree={filteredFileTree || fileTree}
+                    onPress={handleSelectFileTree}
+                  />
+                </FileTreeContainer>
+              </>
+            )}
+            onChangeText={handleSearch}
+          />
         </>
       )}
       <GestureModal
