@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import HymnCell from '../../components/Cell/HymnCell'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import HymnList from '../../components/List/HymnList'
+import Loading from '../../components/Loading'
 import SearchView from '../../components/Search/SearchView'
 import { CommandService } from '../../services/command'
 import { HymnService } from '../../services/hymn'
@@ -58,13 +59,15 @@ const HymnbookScreen: React.FC = (props) => {
 
   return (
     <>
-      <SearchView
-        data={hymns}
-        renderList={(hymns) => <HymnList hymns={filteredHymns} onPress={handleHymnPress} />}
-        searchText={searchText}
-        onChangeText={setSearchText}
-        onClear={() => setSearchText('')}
-      />
+      {filteredHymns.length ? (
+        <SearchView
+          data={filteredHymns}
+          renderList={(filteredHymns) => <HymnList hymns={filteredHymns} onPress={handleHymnPress} />}
+          searchText={searchText}
+          onChangeText={setSearchText}
+          onClear={() => setSearchText('')}
+        />
+      ) : <Loading />}
       <GestureModal
         ref={playerModalRef}
         onClose={handleStopHymn}

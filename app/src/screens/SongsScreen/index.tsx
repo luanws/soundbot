@@ -3,6 +3,7 @@ import { BackHandler } from 'react-native'
 import VideoCell from '../../components/Cell/VideoCell'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import FileTreeList from '../../components/List/FileTreeList'
+import Loading from '../../components/Loading'
 import SearchView from '../../components/Search/SearchView'
 import { FileTree } from '../../models/file-tree'
 import { CommandService } from '../../services/command'
@@ -80,7 +81,7 @@ const SongsScreen: React.FC = (props) => {
 
   return (
     <>
-      {rootFileTree && selectedFileTree && (
+      {rootFileTree && selectedFileTree ? (
         <>
           <SearchView
             data={selectedFileTree.children}
@@ -103,7 +104,7 @@ const SongsScreen: React.FC = (props) => {
             onChangeText={handleSearch}
           />
         </>
-      )}
+      ) : <Loading />}
       <GestureModal
         ref={playerModalRef}
         onClose={handleStopSong}
