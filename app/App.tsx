@@ -39,15 +39,15 @@ function Wrapper() {
     }
   }, [loaded])
 
+  if (!loaded) return null
+
   return (
     <>
       <BackgroundColor color={theme.colors.background} />
-      {loaded && (
-        <StatusBar
-          backgroundColor={theme.colors.statusBar.background}
-          style={theme.colors.statusBar.icons}
-        />
-      )}
+      <StatusBar
+        backgroundColor={theme.colors.statusBar.background}
+        style={theme.colors.statusBar.icons}
+      />
       <NavigationContainer>
         <Routes />
       </NavigationContainer>
