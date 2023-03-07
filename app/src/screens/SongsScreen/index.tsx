@@ -31,7 +31,6 @@ const SongsScreen: React.FC = (props) => {
         const stack = [...stackFileTree]
         const fileTree = stack.pop()
         if (fileTree) {
-          console.log(fileTree.dirname + '\\' + fileTree.name)
           setSelectedFileTree(fileTree)
           setStackFileTree(stack)
         }
