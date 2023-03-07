@@ -8,7 +8,7 @@ import SearchView from '../../components/Search/SearchView'
 import { FileTree } from '../../models/file-tree'
 import { CommandService } from '../../services/command'
 import { SongService } from '../../services/song'
-import { Divider, FileTreeContainer, FileTreeCurrentPathContainer, FileTreeCurrentPathText, PlayModalContainer, PlayModalText } from './styles'
+import { Divider, FileTreeContainer, FileTreeCurrentPathContainer, FileTreeCurrentPathScroll, FileTreeCurrentPathText, PlayModalContainer, PlayModalText } from './styles'
 
 const SongsScreen: React.FC = (props) => {
   const playerModalRef = useRef<GestureModalRef>(null)
@@ -88,9 +88,14 @@ const SongsScreen: React.FC = (props) => {
             renderList={(fileTree) => (
               <>
                 <FileTreeCurrentPathContainer>
-                  <FileTreeCurrentPathText>
-                    {dirnameToRelativePath(rootFileTree.dirname, selectedFileTree.dirname)}
-                  </FileTreeCurrentPathText>
+                  <FileTreeCurrentPathScroll
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                  >
+                    <FileTreeCurrentPathText>
+                      {dirnameToRelativePath(rootFileTree.dirname, selectedFileTree.dirname)}
+                    </FileTreeCurrentPathText>
+                  </FileTreeCurrentPathScroll>
                 </FileTreeCurrentPathContainer>
                 <Divider />
                 <FileTreeContainer>
