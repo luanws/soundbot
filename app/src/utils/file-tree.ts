@@ -19,4 +19,17 @@ export namespace FileTreeUtils {
             return acc
         }, [])
     }
+
+    export function map<T>(fileTreeArray: FileTree[], callback: (fileTree: FileTree) => T): T[] {
+        const mapped: T[] = []
+        forEach(fileTreeArray, fileTree => {
+            const mappedFileTree = callback(fileTree)
+            mapped.push(mappedFileTree)
+        })
+        return mapped
+    }
+
+    export function find(fileTreeArray: FileTree[], callback: (fileTree: FileTree) => boolean): FileTree | undefined {
+        return filter(fileTreeArray, callback)[0]
+    }
 }
