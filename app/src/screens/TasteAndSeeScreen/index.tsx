@@ -12,8 +12,8 @@ const TasteAndSeeScreen: React.FC = () => {
   }, [])
 
   async function updateTasteAndSee() {
-    const songs = await TasteAndSeeService.getTasteAndSees()
-    setTasteAndSeeFileTree(songs)
+    const tasteAndSees = await TasteAndSeeService.getTasteAndSees()
+    setTasteAndSeeFileTree(tasteAndSees)
   }
 
   function searchFileTree(selectedDirectory: FileTree, searchText: string): FileTree[] {
