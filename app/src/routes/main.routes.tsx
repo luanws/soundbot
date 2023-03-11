@@ -6,14 +6,16 @@ import HomeScreen from '../screens/HomeScreen'
 import HymnbookScreen from '../screens/HymnbookScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import SongsScreen from '../screens/SongsScreen'
+import TasteAndSeeScreen from '../screens/TasteAndSeeScreen'
 import { Theme } from '../theme/theme.model'
 import DrawerIcon from './components/DrawerIcon'
 
 export type MainDrawerParamList = {
   Home: undefined
+  Bible: undefined
   Hymnbook: undefined
   Songs: undefined
-  Bible: undefined
+  TasteAndSee: undefined
   Settings: undefined
 }
 
@@ -90,6 +92,17 @@ const MainRoutes: React.FC = () => {
           title: 'Músicas',
           drawerIcon: (props) => (
             <DrawerIcon icon='Entypo/folder-music' {...props} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name='TasteAndSee'
+        component={TasteAndSeeScreen}
+        options={{
+          title: 'Provai e vede',
+          drawerIcon: (props) => (
+            <DrawerIcon icon='MaterialIcons/visibility' {...props} />
           ),
         }}
       />

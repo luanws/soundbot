@@ -16,9 +16,8 @@ const SongsScreen: React.FC = (props) => {
     setSongsFileTree(songs)
   }
 
-  function filterFileTree(selectedDirectory: FileTree, searchText: string): FileTree[] {
-    const filteredFileTree = SongService.searchSongs(selectedDirectory.children, searchText)
-    return filteredFileTree
+  function searchFileTree(selectedDirectory: FileTree, searchText: string): FileTree[] {
+    return SongService.searchSongs(selectedDirectory.children, searchText)
   }
 
   return (
@@ -26,7 +25,7 @@ const SongsScreen: React.FC = (props) => {
       {songsFileTree ? (
         <SearchFileTree
           rootFileTree={songsFileTree}
-          filterFileTree={filterFileTree}
+          searchFileTree={searchFileTree}
         />
       ) : <Loading />}
     </>

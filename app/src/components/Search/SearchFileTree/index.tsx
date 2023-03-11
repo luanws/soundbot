@@ -14,11 +14,11 @@ import {
 
 interface Props {
   rootFileTree: FileTree
-  filterFileTree(selectedDirectory: FileTree, searchText: string): FileTree[]
+  searchFileTree(selectedDirectory: FileTree, searchText: string): FileTree[]
 }
 
 const SearchFileTree: React.FC<Props> = (props) => {
-  const { rootFileTree, filterFileTree } = props
+  const { rootFileTree, searchFileTree: filterFileTree } = props
 
   const playerModalRef = useRef<GestureModalRef>(null)
 

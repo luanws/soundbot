@@ -42,6 +42,11 @@ const HomeScreen: React.FC = (props) => {
             onPress={() => navigation.navigate('Songs')}
           />
           <NavigateButton
+            icon='MaterialIcons/visibility'
+            title='Provai e vede'
+            onPress={() => navigation.navigate('TasteAndSee')}
+          />
+          <NavigateButton
             icon='MaterialIcons/settings'
             title='Configurações'
             onPress={() => navigation.navigate('Settings')}
