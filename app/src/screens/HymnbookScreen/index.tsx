@@ -59,7 +59,7 @@ const HymnbookScreen: React.FC = (props) => {
 
   return (
     <>
-      {filteredHymns.length ? (
+      {hymns.length ? (
         <SearchView
           data={filteredHymns}
           renderList={(filteredHymns) => <HymnList hymns={filteredHymns} onPress={handleHymnPress} />}
