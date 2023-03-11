@@ -1,5 +1,5 @@
 import { ScrollView, Text, View } from "react-native"
-import { styled } from "../../hooks/theme"
+import { styled } from "../../../hooks/theme"
 
 export const Container = styled(View)`
 `
