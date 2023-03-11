@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BackHandler } from 'react-native'
-import VideoCell from '../../../components/Cell/VideoCell'
-import GestureModal, { GestureModalRef } from '../../../components/GestureModal'
 import FileTreeList from '../../../components/List/FileTreeList'
 import SearchView from '../../../components/Search/SearchView'
 import { FileTree } from '../../../models/file-tree'
 import { CommandService } from '../../../services/command'
+import PlayerModal, { PlayerModalRef } from '../../Modal/PlayerModal'
 import {
   Divider, FileTreeContainer, FileTreeCurrentPathContainer,
-  FileTreeCurrentPathScroll, FileTreeCurrentPathText, PlayModalContainer, PlayModalText
+  FileTreeCurrentPathScroll, FileTreeCurrentPathText
 } from './styles'
 
 
@@ -21,7 +20,7 @@ interface Props {
 const SearchFileTree: React.FC<Props> = (props) => {
   const { rootFileTree, searchFileTree: filterFileTree, ListHeaderComponent } = props
 
-  const playerModalRef = useRef<GestureModalRef>(null)
+  const playerModalRef = useRef<PlayerModalRef>(null)
 
   const [selectedFileTree, setSelectedFileTree] = useState<FileTree>(rootFileTree)
   const [stackFileTree, setStackFileTree] = useState<FileTree[]>([])
@@ -106,21 +105,11 @@ const SearchFileTree: React.FC<Props> = (props) => {
         )}
         onChangeText={handleSearch}
       />
-      <GestureModal
+      <PlayerModal
         ref={playerModalRef}
-        onClose={handleStopSong}
-        closeOnOverlayTap={false}
-        onBackButtonPress={() => true}
-        panGestureEnabled={false}
-        withHandle={false}
-      >
-        {playingSong && (
-          <PlayModalContainer>
-            <PlayModalText>Reproduzindo</PlayModalText>
-            <VideoCell filename={playingSong} playing onPress={handleStopSong} />
-          </PlayModalContainer>
-        )}
-      </GestureModal>
+        playingVideoFilename={playingSong}
+        stopVideo={handleStopSong}
+      />
     </>
   )
 }
