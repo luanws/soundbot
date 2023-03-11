@@ -3,7 +3,6 @@ import { Modalize, ModalizeProps } from 'react-native-modalize'
 import { useTheme } from '../../hooks/theme'
 
 export interface GestureModalRef extends Modalize {
-
 }
 
 export interface GestureModalProps extends ModalizeProps {

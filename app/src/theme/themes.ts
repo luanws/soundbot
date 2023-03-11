@@ -98,7 +98,7 @@ export const themes: { [key in ThemeTypes]: Theme } = {
             danger: "#f50057",
             
             successContainer: '#193c19',
-            infoContainer: '#193c3c',
+            infoContainer: '#00c3ff44',
             warningContainer: '#3c3c19',
             dangerContainer: '#3c1919',
 

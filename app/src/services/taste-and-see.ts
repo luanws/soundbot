@@ -15,4 +15,26 @@ export namespace TasteAndSeeService {
             return isFile && isLike
         })
     }
+
+    function checkPathIsToday(fileTree: FileTree, month: number, day: number): boolean {
+        let path = fileTree.dirname + '/' + fileTree.name
+        path = path.replace(/\\/g, '/').replace(/\/\//g, '/')
+        const regex = new RegExp(`.*/0?${month}.*/0?${day}.*`)
+        const isToday = regex.test(path)
+        return isToday
+    }
+
+    export function getTodayTasteAndSee(fileTreeArray: FileTree[]): FileTree | undefined {
+        const today = new Date()
+        const month = today.getMonth() + 1
+        const day = today.getDate()
+
+        const todayTasteAndSee = FileTreeUtils.find(fileTreeArray, fileTree => {
+            const isFile = fileTree.type === 'file'
+            if (!isFile) return false
+            return checkPathIsToday(fileTree, month, day)
+        })
+
+        return todayTasteAndSee
+    }
 }

@@ -15,10 +15,11 @@ import {
 interface Props {
   rootFileTree: FileTree
   searchFileTree(selectedDirectory: FileTree, searchText: string): FileTree[]
+  ListHeaderComponent?: | React.ComponentType<any> | React.ReactElement | null | undefined
 }
 
 const SearchFileTree: React.FC<Props> = (props) => {
-  const { rootFileTree, searchFileTree: filterFileTree } = props
+  const { rootFileTree, searchFileTree: filterFileTree, ListHeaderComponent } = props
 
   const playerModalRef = useRef<GestureModalRef>(null)
 
@@ -96,6 +97,7 @@ const SearchFileTree: React.FC<Props> = (props) => {
             <Divider />
             <FileTreeContainer>
               <FileTreeList
+                ListHeaderComponent={ListHeaderComponent}
                 fileTree={filteredFileTree || fileTree}
                 onPress={handleSelectFileTree}
               />

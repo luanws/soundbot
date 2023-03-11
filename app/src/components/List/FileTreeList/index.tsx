@@ -8,10 +8,11 @@ import { Separator } from './styles'
 interface Props {
   fileTree: FileTree | FileTree[]
   onPress?(item: FileTree): void
+  ListHeaderComponent?: | React.ComponentType<any> | React.ReactElement | null | undefined
 }
 
 const FileTreeList: React.FC<Props> = (props) => {
-  const { fileTree: _fileTree, onPress } = props
+  const { fileTree: _fileTree, onPress, ListHeaderComponent } = props
   const fileTree = Array.isArray(_fileTree) ? _fileTree : [_fileTree]
 
   const renderItem = (fileTree: FileTree) => {
@@ -23,6 +24,7 @@ const FileTreeList: React.FC<Props> = (props) => {
   return (
     <FlatList
       data={fileTree}
+      ListHeaderComponent={ListHeaderComponent}
       keyExtractor={(item, index) => item.dirname + item.name}
       renderItem={({ item }) => renderItem(item)}
       ItemSeparatorComponent={() => <Separator />}
