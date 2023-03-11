@@ -1,3 +1,5 @@
+from sys import exit
+
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
