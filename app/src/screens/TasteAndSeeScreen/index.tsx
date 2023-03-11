@@ -64,7 +64,6 @@ const TasteAndSeeScreen: React.FC = () => {
                 <TodayTasteAndSeeInfoText>
                   Foi encontrado um vídeo correspondente à data de hoje.
                   Clique no botão abaixo para iniciar.
-                  Caso queira ver outros vídeos, utilize a navegação abaixo.
                 </TodayTasteAndSeeInfoText>
                 <VideoCell
                   filename={todayTasteAndSee.name}
