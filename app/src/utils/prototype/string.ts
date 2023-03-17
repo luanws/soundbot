@@ -15,7 +15,7 @@ String.prototype.replaceDiacritics = function () {
 }
 
 String.prototype.like = function (s: string) {
-    return this.replaceDiacritics().toLowerCase().includes(s.replaceDiacritics().toLowerCase())
+    return this.replaceDiacritics().toLowerCase().trim().includes(s.replaceDiacritics().toLowerCase().trim())
 }
 
 export { }
