@@ -1,30 +1,40 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { BibleReference, BibleVerse } from '../../../models/bible'
+import { BibleVerse } from '../../../models/bible'
 import { BibleVerseDisplaySettings } from '../../../models/bible-verse-display-settings'
+import { AppStackParamList } from '../../../routes/app.routes'
 import { BibleService } from '../../../services/bible'
 import { BibleVerseDisplaySettingsService } from '../../../services/bible-verse-display-settings'
-import { Container, PreviewWebView } from './styles'
+import { Button, PreviewWebView, PreviewWebViewContainer } from './styles'
 
 
 interface Props {
   bibleVerse: BibleVerse
-  bibleVerseHTMLStyleProps?: BibleVerseDisplaySettings
+  displaySettings?: BibleVerseDisplaySettings
 }
 
 const CustomBibleVersePreview: React.FC<Props> = (props) => {
-  const { bibleVerse, bibleVerseHTMLStyleProps } = props
+  const { bibleVerse, displaySettings } = props
   const { text, reference } = bibleVerse
-  
+
   const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(
     text,
     BibleService.bibleReferenceToString(reference),
-    bibleVerseHTMLStyleProps
+    displaySettings
   )
 
+  const navigation = useNavigation<NavigationProp<AppStackParamList>>()
+
+  function handlePress() {
+    navigation.navigate('BibleVerseDisplaySettings')
+  }
+
   return (
-    <Container pointerEvents='none'>
-      <PreviewWebView source={{ html }} />
-    </Container>
+    <Button onPress={handlePress}>
+      <PreviewWebViewContainer pointerEvents='none'>
+        <PreviewWebView source={{ html }} />
+      </PreviewWebViewContainer>
+    </Button >
   )
 }
 
