@@ -1,4 +1,4 @@
-import { useFocusEffect } from '@react-navigation/native'
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from 'react-native'
 import BibleBar from '../../components/Bible/BibleBar'
@@ -11,12 +11,15 @@ import SwitchLabel from '../../components/SwitchLabel'
 import usePersistedState from '../../hooks/persisted-state'
 import { BibleReference } from '../../models/bible'
 import { BibleVerseDisplaySettings } from '../../models/bible-verse-display-settings'
+import { AppStackParamList } from '../../routes/app.routes'
 import { BibleService } from '../../services/bible'
 import { BibleVerseDisplaySettingsService } from '../../services/bible-verse-display-settings'
 import { CommandService } from '../../services/command'
 import { BibleText, BibleTextContainer, Container, ContentContainer, SwitchContainer, WarningContainer, WarningText } from './styles'
 
 const BibleScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<AppStackParamList>>()
+
   const bibleVersionsManagerModalizeRef = useRef<GestureModalRef>(null)
 
   const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
@@ -112,6 +115,10 @@ const BibleScreen: React.FC = () => {
     }
   }
 
+  function handleCustomBibleVersePreviewPress() {
+    navigation.navigate('BibleVerseDisplaySettings')
+  }
+
   return (
     <>
       <Container>
@@ -138,6 +145,7 @@ const BibleScreen: React.FC = () => {
             <CustomBibleVersePreview
               bibleVerse={{ text: bibleText, reference: bibleReference }}
               displaySettings={bibleVerseDisplaySettings}
+              onPress={handleCustomBibleVersePreviewPress}
             />
           )}
           {warningMessage && (
