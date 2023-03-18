@@ -1,6 +1,6 @@
-import { Text, View, ScrollView, Dimensions } from "react-native"
-import { styled } from "../../hooks/theme"
+import { Dimensions, ScrollView, Text, View } from "react-native"
 import { WebView } from "react-native-webview"
+import { styled } from "../../hooks/theme"
 
 const { width } = Dimensions.get("window")
 
@@ -20,12 +20,13 @@ export const BibleTextContainer = styled(View)`
 `
 
 export const PreviewWebViewContainer = styled(View)`
-    height: ${width*(3/4)}px;
+    height: ${width * (3 / 4)}px;
     overflow: hidden;
 `
 
 export const PreviewWebView = styled(WebView)`
     flex: 1;
+    background-color: ${({ theme }) => theme.colors.background};
 `
 
 export const BibleText = styled(Text)`

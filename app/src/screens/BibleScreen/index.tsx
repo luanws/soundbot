@@ -22,19 +22,32 @@ const BibleScreen: React.FC = (props) => {
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
   const [bibleText, setBibleText] = useState<string>('')
   const [bibleHTML, setBibleHTML] = useState<string>('')
-  const [enablePreview, setEnablePreview] = useState<boolean>(false)
+  const [customShowEnabled, setCustomShowEnabled] = useState<boolean>(false)
   const [warningMessage, setWarningMessage] = useState<string | null>(null)
 
   useFocusEffect(useCallback(() => {
     return () => {
       CommandService.hideHTML()
+      CommandService.hideText()
     }
   }, []))
 
   useEffect(() => {
+    closeNotUsedShowMethod()
+  }, [customShowEnabled])
+
+  useEffect(() => {
     setWarningMessage(null)
     updateBibleText()
-  }, [bibleVersion, bibleReference])
+  }, [bibleVersion, bibleReference, customShowEnabled])
+
+  async function closeNotUsedShowMethod() {
+    if (customShowEnabled) {
+      await CommandService.hideText()
+    } else {
+      await CommandService.hideHTML()
+    }
+  }
 
   async function updateBibleText() {
     if (bibleVersion && bibleReference) {
@@ -42,12 +55,17 @@ const BibleScreen: React.FC = (props) => {
       if (bibleText) {
         setBibleText(bibleText)
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
-        const htmlProps: BibleVerseHTMLProps = {
-          text: bibleText,
-          reference: referenceString
+        if (customShowEnabled) {
+          const htmlProps: BibleVerseHTMLProps = {
+            text: bibleText,
+            reference: referenceString
+          }
+          setBibleHTML(getBibleVerseHTML({ ...htmlProps, fontSize: 22 }))
+          await CommandService.showHTML(getBibleVerseHTML(htmlProps))
+        } else {
+          const text = `${referenceString} (${bibleText})`
+          await CommandService.showText(text)
         }
-        setBibleHTML(getBibleVerseHTML({ ...htmlProps, fontSize: 22 }))
-        await CommandService.showHTML(getBibleVerseHTML(htmlProps))
       } else {
         setWarningMessage('Versículo não encontrado')
       }
@@ -107,17 +125,17 @@ const BibleScreen: React.FC = (props) => {
         <ContentContainer>
           <SwitchContainer>
             <SwitchLabel
-              label='Pré-visualização'
-              value={enablePreview}
-              onChange={setEnablePreview}
+              label='Apresentação customizada'
+              value={customShowEnabled}
+              onChange={setCustomShowEnabled}
             />
           </SwitchContainer>
-          {bibleText && !enablePreview && (
+          {bibleText && !customShowEnabled && (
             <BibleTextContainer>
               <BibleText>{bibleText}</BibleText>
             </BibleTextContainer>
           )}
-          {bibleHTML && enablePreview && (
+          {bibleHTML && customShowEnabled && (
             <PreviewWebViewContainer pointerEvents='none'>
               <PreviewWebView source={{ html: bibleHTML }} />
             </PreviewWebViewContainer>
