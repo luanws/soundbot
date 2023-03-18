@@ -1,4 +1,4 @@
-interface Props {
+export interface BibleVerseHTMLProps {
     text: string
     reference: string
     backgroundColor?: string
@@ -9,7 +9,7 @@ interface Props {
     fontFamily?: string
 }
 
-const defaultProps: Props = {
+const defaultProps: BibleVerseHTMLProps = {
     text: '',
     reference: '',
     backgroundColor: '#000',
@@ -20,7 +20,7 @@ const defaultProps: Props = {
     fontFamily: 'Franklin Gothic Demi, Arial Narrow, Arial, sans-serif'
 }
 
-export function getBibleVerseHTML(props: Props): string {
+export function getBibleVerseHTML(props: BibleVerseHTMLProps): string {
     props = Object.assign({}, defaultProps, props)
     return `
     <html>

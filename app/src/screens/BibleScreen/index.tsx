@@ -6,12 +6,13 @@ import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelecto
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
 import FloatActionButton from '../../components/FloatActionButton'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
+import SwitchLabel from '../../components/SwitchLabel'
 import usePersistedState from '../../hooks/persisted-state'
 import { BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
 import { CommandService } from '../../services/command'
-import { getBibleVerseHTML } from './bible-verse-html'
-import { BibleText, BibleTextContainer, Container, ContentContainer, WarningContainer, WarningText } from './styles'
+import { BibleVerseHTMLProps, getBibleVerseHTML } from './bible-verse-html'
+import { BibleText, BibleTextContainer, Container, ContentContainer, PreviewWebView, PreviewWebViewContainer, SwitchContainer, WarningContainer, WarningText } from './styles'
 
 const BibleScreen: React.FC = (props) => {
   const bibleVersionsManagerModalizeRef = useRef<GestureModalRef>(null)
@@ -20,6 +21,8 @@ const BibleScreen: React.FC = (props) => {
   const [bibleVersion, setBibleVersion] = usePersistedState<string>('bible-version-selected', 'ARA')
   const [bibleReference, setBibleReference] = useState<BibleReference | undefined>()
   const [bibleText, setBibleText] = useState<string>('')
+  const [bibleHTML, setBibleHTML] = useState<string>('')
+  const [enablePreview, setEnablePreview] = useState<boolean>(false)
   const [warningMessage, setWarningMessage] = useState<string | null>(null)
 
   useFocusEffect(useCallback(() => {
@@ -39,11 +42,12 @@ const BibleScreen: React.FC = (props) => {
       if (bibleText) {
         setBibleText(bibleText)
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
-        const html = getBibleVerseHTML({
+        const htmlProps: BibleVerseHTMLProps = {
           text: bibleText,
           reference: referenceString
-        })
-        await CommandService.showHTML(html)
+        }
+        setBibleHTML(getBibleVerseHTML({ ...htmlProps, fontSize: 22 }))
+        await CommandService.showHTML(getBibleVerseHTML(htmlProps))
       } else {
         setWarningMessage('Versículo não encontrado')
       }
@@ -101,10 +105,22 @@ const BibleScreen: React.FC = (props) => {
           onPressReference={handleSelectVerse}
         />
         <ContentContainer>
-          {bibleText && (
+          <SwitchContainer>
+            <SwitchLabel
+              label='Pré-visualização'
+              value={enablePreview}
+              onChange={setEnablePreview}
+            />
+          </SwitchContainer>
+          {bibleText && !enablePreview && (
             <BibleTextContainer>
               <BibleText>{bibleText}</BibleText>
             </BibleTextContainer>
+          )}
+          {bibleHTML && enablePreview && (
+            <PreviewWebViewContainer pointerEvents='none'>
+              <PreviewWebView source={{ html: bibleHTML }} />
+            </PreviewWebViewContainer>
           )}
           {warningMessage && (
             <WarningContainer>
