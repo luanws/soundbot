@@ -18,9 +18,10 @@ const NumberSelector: React.FC<Props> = (props) => {
   }
 
   return (
-    <Container padding={padding}>
+    <Container>
       <FlatList
         data={numbers}
+        contentContainerStyle={{ padding }}
         keyExtractor={(item) => item.toString()}
         numColumns={columns}
         renderItem={({ item }) => (
