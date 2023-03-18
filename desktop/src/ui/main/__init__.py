@@ -5,6 +5,7 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
 
 from src.controllers import ApplicationController
+from src.ui.html_projector import HTMLProjectorWindow
 from src.ui.main.window import Ui_MainWindow
 from src.ui.projector_settings import ProjectorSettingsWindow
 from src.ui.text_projector import TextProjectorWindow
@@ -30,6 +31,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.video_path_settings_window = VideoPathSettingsWindow()
         self.text_projector_window = TextProjectorWindow()
         self.video_projector_window = VideoProjectorWindow()
+        self.html_projector_window = HTMLProjectorWindow()
 
         self.main_window_control = ApplicationController(self.text_projector_window, self.video_projector_window)
 
