@@ -59,7 +59,7 @@ const BibleScreen: React.FC = (props) => {
           const html = BibleVerseHTMLService.makeBibleVerseHTML(bibleText, referenceString)
           await CommandService.showHTML(html)
         } else {
-          const text = `${bibleText} (${referenceString})`
+          const text = `${bibleText.trim()} (${referenceString})`
           await CommandService.showText(text)
         }
       } else {
