@@ -33,7 +33,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.video_projector_window = VideoProjectorWindow()
         self.html_projector_window = HTMLProjectorWindow()
 
-        self.main_window_control = ApplicationController(self.text_projector_window, self.video_projector_window)
+        self.main_window_control = ApplicationController(
+            self.text_projector_window,
+            self.video_projector_window,
+            self.html_projector_window,
+        )
 
         screen = QDesktopWidget().screenGeometry(2)
         self.text_projector_window.move(screen.left(), screen.top())

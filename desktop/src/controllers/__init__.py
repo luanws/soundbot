@@ -5,23 +5,28 @@ from src.utils.remote.remote_controls import get_remote_api
 
 from .text_projector import TextProjectorController
 from .video_projector import VideoProjectorController
+from .html_projector import HTMLProjectorController
 
 if TYPE_CHECKING:
     from src.ui.text_projector import TextProjectorWindow
     from src.ui.video_projector import VideoProjectorWindow
+    from src.ui.html_projector import HTMLProjectorWindow
 
 
 class ApplicationController:
     text_projector_controller: TextProjectorController
     video_projector_controller: VideoProjectorController
+    html_projector_controller: 'HTMLProjectorController'
 
     def __init__(
         self,
         text_projector_window: 'TextProjectorWindow',
         video_projector_window: 'VideoProjectorWindow',
+        html_projector_window: 'HTMLProjectorWindow',
     ) -> None:
         self.text_projector_controller = TextProjectorController(text_projector_window)
         self.video_projector_controller = VideoProjectorController(video_projector_window)
+        self.html_projector_controller = HTMLProjectorController(html_projector_window)
 
         self.remote_api = get_remote_api()
 
@@ -30,6 +35,8 @@ class ApplicationController:
             (Command.HIDE_TEXT, self.text_projector_controller.close_text_projector),
             (Command.PLAY_VIDEO, self.video_projector_controller.play_video),
             (Command.STOP_VIDEO, self.video_projector_controller.close_video_projector),
+            (Command.SHOW_HTML, self.html_projector_controller.show_html),
+            (Command.HIDE_HTML, self.html_projector_controller.close_html_projector),
         ]
 
         for command, callback in commands:
