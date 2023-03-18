@@ -1,6 +1,6 @@
-import React from 'react'
-import { FlatList } from 'react-native'
-import BookCell from './BookCell'
+import React, { useState } from 'react'
+import SearchView from '../../../Search/SearchView'
+import BookSelectorList from './List'
 import { Container } from './styles'
 
 interface Props {
@@ -11,19 +11,27 @@ interface Props {
 const BookSelector: React.FC<Props> = (props) => {
   const { bookNames, onSelectBookName } = props
 
-  function handleSelectBookName(bookName: string) {
-    if (onSelectBookName) onSelectBookName(bookName)
+  const [filteredBookNames, setFilteredBookNames] = useState<string[]>(bookNames)
+
+  function filterBookNames(searchText: string) {
+    const filteredBookNames = bookNames.filter((bookName) => {
+      return bookName.like(searchText)
+    })
+    setFilteredBookNames(filteredBookNames)
   }
 
   return (
     <Container>
-      <FlatList
-        data={bookNames}
-        keyExtractor={(item) => item}
-        contentContainerStyle={{ paddingLeft: 16, paddingRight: 16 }}
-        renderItem={({ item }) => (
-          <BookCell bookName={item} onSelectBookName={handleSelectBookName} />
+      <SearchView
+        data={filteredBookNames}
+        renderList={(filteredBookNames) => (
+          <BookSelectorList
+            bookNames={filteredBookNames}
+            onSelectBookName={onSelectBookName}
+          />
         )}
+        onSearch={filterBookNames}
+        onClear={() => filterBookNames('')}
       />
     </Container>
   )
