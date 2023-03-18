@@ -3,13 +3,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from 'react-native'
 import BibleBar from '../../components/Bible/BibleBar'
 import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
-import CustomBibleVersePreview from '../../components/Bible/CustomBibleVersePreview'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
+import CustomBibleVersePreview from '../../components/Bible/CustomBibleVersePreview'
 import FloatActionButton from '../../components/FloatActionButton'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import SwitchLabel from '../../components/SwitchLabel'
 import usePersistedState from '../../hooks/persisted-state'
 import { BibleReference } from '../../models/bible'
+import { BibleVerseDisplaySettings } from '../../models/bible-verse-display-settings'
 import { BibleService } from '../../services/bible'
 import { BibleVerseDisplaySettingsService } from '../../services/bible-verse-display-settings'
 import { CommandService } from '../../services/command'
@@ -24,8 +25,13 @@ const BibleScreen: React.FC = () => {
   const [bibleText, setBibleText] = useState<string>('')
   const [customShowEnabled, setCustomShowEnabled] = useState<boolean>(false)
   const [warningMessage, setWarningMessage] = useState<string | null>(null)
+  const [bibleVerseDisplaySettings, setBibleVerseDisplaySettings] = useState<BibleVerseDisplaySettings>({})
 
   useFocusEffect(useCallback(() => {
+    BibleVerseDisplaySettingsService.getDisplaySettings().then(setBibleVerseDisplaySettings)
+    if (bibleVersion && bibleReference) {
+      updateBibleText()
+    }
     return () => {
       CommandService.hideHTML()
       CommandService.hideText()
@@ -56,7 +62,7 @@ const BibleScreen: React.FC = () => {
         setBibleText(bibleText)
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
         if (customShowEnabled) {
-          const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(bibleText, referenceString)
+          const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(bibleText, referenceString, bibleVerseDisplaySettings)
           await CommandService.showHTML(html)
         } else {
           const text = `${bibleText.trim()} (${referenceString})`
@@ -132,7 +138,10 @@ const BibleScreen: React.FC = () => {
             </BibleTextContainer>
           )}
           {bibleReference && customShowEnabled && (
-            <CustomBibleVersePreview bibleVerse={{ text: bibleText, reference: bibleReference }} />
+            <CustomBibleVersePreview
+              bibleVerse={{ text: bibleText, reference: bibleReference }}
+              displaySettings={bibleVerseDisplaySettings}
+            />
           )}
           {warningMessage && (
             <WarningContainer>

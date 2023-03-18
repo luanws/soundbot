@@ -1,7 +1,8 @@
 import { BibleVerseDisplaySettings } from "../models/bible-verse-display-settings"
+import Storage from "../utils/storage"
 
 export namespace BibleVerseDisplaySettingsService {
-    const defaultProps: BibleVerseDisplaySettings = {
+    export const defaultBibleVerseDisplaySettings: BibleVerseDisplaySettings = {
         backgroundColor: '#000',
         fontSize: 32,
         textColor: '#fff',
@@ -10,8 +11,13 @@ export namespace BibleVerseDisplaySettingsService {
         fontFamily: 'Franklin Gothic Demi, Arial Narrow, Arial, sans-serif'
     }
 
+    export async function getDisplaySettings(): Promise<BibleVerseDisplaySettings> {
+        const displaySettings = await Storage.get<BibleVerseDisplaySettings>('bible_verse_display_settings')
+        return { ...defaultBibleVerseDisplaySettings, ...displaySettings }
+    }
+
     export function makeBibleVerseHTML(text: string, reference: string, props?: BibleVerseDisplaySettings): string {
-        props = { ...defaultProps, ...props }
+        props = { ...defaultBibleVerseDisplaySettings, ...props }
         return `
         <html>
     
