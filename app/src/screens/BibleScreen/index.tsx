@@ -10,6 +10,7 @@ import usePersistedState from '../../hooks/persisted-state'
 import { BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
 import { CommandService } from '../../services/command'
+import { getBibleVerseHTML } from './bible-verse-html'
 import { BibleText, BibleTextContainer, Container, ContentContainer, WarningContainer, WarningText } from './styles'
 
 const BibleScreen: React.FC = (props) => {
@@ -23,7 +24,7 @@ const BibleScreen: React.FC = (props) => {
 
   useFocusEffect(useCallback(() => {
     return () => {
-      CommandService.hideText()
+      CommandService.hideHTML()
     }
   }, []))
 
@@ -38,7 +39,11 @@ const BibleScreen: React.FC = (props) => {
       if (bibleText) {
         setBibleText(bibleText)
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
-        await CommandService.showText(`${bibleText} (${referenceString})`)
+        const html = getBibleVerseHTML({
+          text: bibleText,
+          reference: referenceString
+        })
+        await CommandService.showHTML(html)
       } else {
         setWarningMessage('Versículo não encontrado')
       }
