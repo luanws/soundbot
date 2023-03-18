@@ -1,21 +1,21 @@
 import React from 'react'
 import { BibleReference, BibleVerse } from '../../../models/bible'
-import { BibleVerseHTMLStyleProps } from '../../../models/bible-verse-html'
+import { BibleVerseDisplaySettings } from '../../../models/bible-verse-display-settings'
 import { BibleService } from '../../../services/bible'
-import { BibleVerseHTMLService } from '../../../services/bible-verse-html'
+import { BibleVerseDisplaySettingsService } from '../../../services/bible-verse-display-settings'
 import { Container, PreviewWebView } from './styles'
 
 
 interface Props {
   bibleVerse: BibleVerse
-  bibleVerseHTMLStyleProps?: BibleVerseHTMLStyleProps
+  bibleVerseHTMLStyleProps?: BibleVerseDisplaySettings
 }
 
-const BibleVerseHTMLPreview: React.FC<Props> = (props) => {
+const CustomBibleVersePreview: React.FC<Props> = (props) => {
   const { bibleVerse, bibleVerseHTMLStyleProps } = props
   const { text, reference } = bibleVerse
   
-  const html = BibleVerseHTMLService.makeBibleVerseHTML(
+  const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(
     text,
     BibleService.bibleReferenceToString(reference),
     bibleVerseHTMLStyleProps
@@ -28,4 +28,4 @@ const BibleVerseHTMLPreview: React.FC<Props> = (props) => {
   )
 }
 
-export default BibleVerseHTMLPreview
+export default CustomBibleVersePreview

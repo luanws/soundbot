@@ -1,7 +1,7 @@
-import { BibleVerseHTMLStyleProps } from "../models/bible-verse-html"
+import { BibleVerseDisplaySettings } from "../models/bible-verse-display-settings"
 
-export namespace BibleVerseHTMLService {
-    const defaultProps: BibleVerseHTMLStyleProps = {
+export namespace BibleVerseDisplaySettingsService {
+    const defaultProps: BibleVerseDisplaySettings = {
         backgroundColor: '#000',
         fontSize: 32,
         textColor: '#fff',
@@ -10,7 +10,7 @@ export namespace BibleVerseHTMLService {
         fontFamily: 'Franklin Gothic Demi, Arial Narrow, Arial, sans-serif'
     }
 
-    export function makeBibleVerseHTML(text: string, reference: string, props?: BibleVerseHTMLStyleProps): string {
+    export function makeBibleVerseHTML(text: string, reference: string, props?: BibleVerseDisplaySettings): string {
         props = { ...defaultProps, ...props }
         return `
         <html>

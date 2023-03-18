@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from 'react-native'
 import BibleBar from '../../components/Bible/BibleBar'
 import BibleReferenceSelector from '../../components/Bible/BibleReferenceSelector'
-import BibleVerseHTMLPreview from '../../components/Bible/BibleVerseHTMLPreview'
+import CustomBibleVersePreview from '../../components/Bible/CustomBibleVersePreview'
 import BibleVersionsManager from '../../components/Bible/BibleVersionsManager'
 import FloatActionButton from '../../components/FloatActionButton'
 import GestureModal, { GestureModalRef } from '../../components/GestureModal'
@@ -11,11 +11,11 @@ import SwitchLabel from '../../components/SwitchLabel'
 import usePersistedState from '../../hooks/persisted-state'
 import { BibleReference } from '../../models/bible'
 import { BibleService } from '../../services/bible'
-import { BibleVerseHTMLService } from '../../services/bible-verse-html'
+import { BibleVerseDisplaySettingsService } from '../../services/bible-verse-display-settings'
 import { CommandService } from '../../services/command'
 import { BibleText, BibleTextContainer, Container, ContentContainer, SwitchContainer, WarningContainer, WarningText } from './styles'
 
-const BibleScreen: React.FC = (props) => {
+const BibleScreen: React.FC = () => {
   const bibleVersionsManagerModalizeRef = useRef<GestureModalRef>(null)
 
   const [bibleReferenceSelectorIsVisible, setBibleReferenceSelectorIsVisible] = useState<boolean>(false)
@@ -56,7 +56,7 @@ const BibleScreen: React.FC = (props) => {
         setBibleText(bibleText)
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
         if (customShowEnabled) {
-          const html = BibleVerseHTMLService.makeBibleVerseHTML(bibleText, referenceString)
+          const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(bibleText, referenceString)
           await CommandService.showHTML(html)
         } else {
           const text = `${bibleText.trim()} (${referenceString})`
@@ -132,7 +132,7 @@ const BibleScreen: React.FC = (props) => {
             </BibleTextContainer>
           )}
           {bibleReference && customShowEnabled && (
-            <BibleVerseHTMLPreview bibleVerse={{ text: bibleText, reference: bibleReference }} />
+            <CustomBibleVersePreview bibleVerse={{ text: bibleText, reference: bibleReference }} />
           )}
           {warningMessage && (
             <WarningContainer>

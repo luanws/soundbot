@@ -1,4 +1,4 @@
-export interface BibleVerseHTMLStyleProps {
+export interface BibleVerseDisplaySettings {
     backgroundColor?: string
     fontSize?: number
     textColor?: string
