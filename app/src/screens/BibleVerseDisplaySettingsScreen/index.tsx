@@ -1,7 +1,9 @@
+
 import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomBibleVersePreview from '../../components/Bible/CustomBibleVersePreview'
 import FloatActionButton from '../../components/FloatActionButton'
+import SliderInput from '../../components/FormComponents/SliderInput'
 import Storage from '../../utils/storage'
 import { generalPreset, presets } from './presets'
 import { Container, NavigationButton, NavigationButtonIcon, NavigationButtonsContainer, PresetContainer, PresetName } from './styles'
@@ -10,7 +12,22 @@ const BibleVerseDisplaySettingsScreen: React.FC = () => {
   const navigation = useNavigation()
 
   const [presetName, setPresetName] = useState<string>(Object.keys(presets)[0])
-  const displaySettings = { ...generalPreset, ...presets[presetName] }
+  const [displaySettings, setDisplaySettings] = useState({ ...generalPreset, ...presets[presetName] })
+
+  useEffect(() => {
+    updateDisplaySettings()
+  }, [])
+
+  useEffect(() => {
+    setDisplaySettings(displaySettings => ({ ...displaySettings, ...presets[presetName] }))
+  }, [presetName])
+
+  async function updateDisplaySettings() {
+    const displaySettings = await Storage.get('bible_verse_display_settings')
+    if (displaySettings) {
+      setDisplaySettings(displaySettings)
+    }
+  }
 
   async function saveDisplaySettings() {
     Storage.set('bible_verse_display_settings', displaySettings)
@@ -56,6 +73,24 @@ const BibleVerseDisplaySettingsScreen: React.FC = () => {
             <NavigationButtonIcon name='navigate-next' />
           </NavigationButton>
         </NavigationButtonsContainer>
+        <SliderInput
+          label='Tamanho da fonte'
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          formatValue={value => `${value}`}
+          value={displaySettings.fontSize || 0}
+          onValueChange={fontSize => setDisplaySettings(displaySettings => ({ ...displaySettings, fontSize }))}
+        />
+        <SliderInput
+          label='Margem'
+          minimumValue={0}
+          maximumValue={200}
+          step={1}
+          formatValue={value => `${value}`}
+          value={displaySettings.margin || 0}
+          onValueChange={margin => setDisplaySettings(displaySettings => ({ ...displaySettings, margin }))}
+        />
       </Container >
       <FloatActionButton
         icon='MaterialIcons/check'
