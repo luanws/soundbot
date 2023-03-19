@@ -31,17 +31,20 @@ const BibleScreen: React.FC = () => {
   const [bibleVerseDisplaySettings, setBibleVerseDisplaySettings] = useState<BibleVerseDisplaySettings>({})
 
   useFocusEffect(useCallback(() => {
-    BibleVerseDisplaySettingsService.getDisplaySettings().then(setBibleVerseDisplaySettings)
+    BibleVerseDisplaySettingsService.getDisplaySettings().then(displaySettings => {
+      setBibleVerseDisplaySettings(displaySettings)
+      updateBibleText(displaySettings)
+    })
     return () => {
       CommandService.hideHTML()
       CommandService.hideText()
     }
   }, []))
 
-  useFocusEffect(useCallback(() => {
+  useEffect(() => {
     setWarningMessage(null)
     updateBibleText()
-  }, [bibleVersion, bibleReference, customShowEnabled]))
+  }, [bibleVersion, bibleReference, customShowEnabled])
 
   useEffect(() => {
     closeNotUsedShowMethod()
@@ -55,19 +58,23 @@ const BibleScreen: React.FC = () => {
     }
   }
 
-  async function updateBibleText() {
+  async function showText(text: string, reference: string) {
+    await CommandService.showText(`${text.trim()} (${reference})`)
+  }
+
+  async function showHTML(text: string, reference: string, displaySettings: BibleVerseDisplaySettings) {
+    const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(text, reference, displaySettings)
+    await CommandService.showHTML(html)
+  }
+
+  async function updateBibleText(displaySettings: BibleVerseDisplaySettings = bibleVerseDisplaySettings) {
     if (bibleVersion && bibleReference) {
       const bibleText = await BibleService.getTextFromBible(bibleVersion, bibleReference)
       if (bibleText) {
         setBibleText(bibleText)
         const referenceString = BibleService.bibleReferenceToString(bibleReference)
-        if (customShowEnabled) {
-          const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(bibleText, referenceString, bibleVerseDisplaySettings)
-          await CommandService.showHTML(html)
-        } else {
-          const text = `${bibleText.trim()} (${referenceString})`
-          await CommandService.showText(text)
-        }
+        if (customShowEnabled) await showHTML(bibleText, referenceString, displaySettings)
+        else await showText(bibleText, referenceString)
       } else {
         setWarningMessage('Versículo não encontrado')
       }
