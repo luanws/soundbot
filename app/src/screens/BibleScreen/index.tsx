@@ -31,20 +31,17 @@ const BibleScreen: React.FC = () => {
   const [bibleVerseDisplaySettings, setBibleVerseDisplaySettings] = useState<BibleVerseDisplaySettings>({})
 
   useFocusEffect(useCallback(() => {
-    BibleVerseDisplaySettingsService.getDisplaySettings().then(displaySettings => {
-      setBibleVerseDisplaySettings(displaySettings)
-      updateBibleText(displaySettings)
-    })
+    BibleVerseDisplaySettingsService.getDisplaySettings().then(setBibleVerseDisplaySettings)
     return () => {
       CommandService.hideHTML()
       CommandService.hideText()
     }
   }, []))
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     setWarningMessage(null)
     updateBibleText()
-  }, [bibleVersion, bibleReference, customShowEnabled])
+  }, [bibleVersion, bibleReference, customShowEnabled]))
 
   useEffect(() => {
     closeNotUsedShowMethod()
