@@ -52,6 +52,7 @@ export namespace BibleVerseDisplaySettingsService {
                     justify-content: center;
                     align-items: center;
                     padding: ${props.margin}px;
+                    overflow: hidden;
                 }
         
                 .text-container {
