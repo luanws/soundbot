@@ -15,7 +15,7 @@ import { AppStackParamList } from '../../routes/app.routes'
 import { BibleService } from '../../services/bible'
 import { BibleVerseDisplaySettingsService } from '../../services/bible-verse-display-settings'
 import { CommandService } from '../../services/command'
-import { BibleText, BibleTextContainer, Container, ContentContainer, SwitchContainer, WarningContainer, WarningText } from './styles'
+import { BibleText, BibleTextContainer, Container, ContentContainer, ContentScroll, PreviewWebViewContainer, SwitchContainer, WarningContainer, WarningText } from './styles'
 
 const BibleScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<AppStackParamList>>()
@@ -135,32 +135,36 @@ const BibleScreen: React.FC = () => {
           onPressVersion={handleOpenBibleVersionsManager}
           onPressReference={handleSelectVerse}
         />
-        <ContentContainer>
-          <SwitchContainer>
-            <SwitchLabel
-              label='Apresentação customizada'
-              value={customShowEnabled}
-              onChange={setCustomShowEnabled}
-            />
-          </SwitchContainer>
-          {bibleText && !customShowEnabled && (
-            <BibleTextContainer>
-              <BibleText>{bibleText}</BibleText>
-            </BibleTextContainer>
-          )}
-          {bibleReference && customShowEnabled && (
-            <CustomBibleVersePreview
-              bibleVerse={{ text: bibleText, reference: bibleReference }}
-              displaySettings={bibleVerseDisplaySettings}
-              onPress={handleCustomBibleVersePreviewPress}
-            />
-          )}
-          {warningMessage && (
-            <WarningContainer>
-              <WarningText>{warningMessage}</WarningText>
-            </WarningContainer>
-          )}
-        </ContentContainer>
+        <ContentScroll>
+          <ContentContainer>
+            <SwitchContainer>
+              <SwitchLabel
+                label='Apresentação customizada'
+                value={customShowEnabled}
+                onChange={setCustomShowEnabled}
+              />
+            </SwitchContainer>
+            {bibleText && !customShowEnabled && (
+              <BibleTextContainer>
+                <BibleText>{bibleText}</BibleText>
+              </BibleTextContainer>
+            )}
+            {bibleReference && customShowEnabled && (
+              <PreviewWebViewContainer>
+                <CustomBibleVersePreview
+                  bibleVerse={{ text: bibleText, reference: bibleReference }}
+                  displaySettings={bibleVerseDisplaySettings}
+                  onPress={handleCustomBibleVersePreviewPress}
+                />
+              </PreviewWebViewContainer>
+            )}
+            {warningMessage && (
+              <WarningContainer>
+                <WarningText>{warningMessage}</WarningText>
+              </WarningContainer>
+            )}
+          </ContentContainer>
+        </ContentScroll>
       </Container>
       <FloatActionButton
         icon='MaterialIcons/navigate-before'

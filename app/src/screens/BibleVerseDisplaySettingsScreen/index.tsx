@@ -25,7 +25,17 @@ const BibleVerseDisplaySettingsScreen: React.FC = () => {
   async function updateDisplaySettings() {
     const displaySettings = await BibleVerseDisplaySettingsService.getDisplaySettings()
     if (displaySettings) {
+      const presetName = Object.keys(presets).find(presetName => {
+        const preset = presets[presetName]
+        const { backgroundColor, textColor, referenceTextColor } = preset
+        return (
+          backgroundColor === displaySettings.backgroundColor &&
+          textColor === displaySettings.textColor &&
+          referenceTextColor === displaySettings.referenceTextColor
+        )
+      }) || 'Personalizado'
       setDisplaySettings(displaySettings)
+      setPresetName(presetName)
     }
   }
 

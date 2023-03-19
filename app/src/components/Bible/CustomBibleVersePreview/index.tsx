@@ -19,7 +19,7 @@ const CustomBibleVersePreview: React.FC<Props> = (props) => {
   const html = BibleVerseDisplaySettingsService.makeBibleVerseHTML(
     text,
     BibleService.bibleReferenceToString(reference),
-    { ...displaySettings, fontSize: (displaySettings?.fontSize || 0) * 0.6 }
+    { ...displaySettings, fontSize: (displaySettings?.fontSize || 0) * 0.65 }
   )
 
   return (

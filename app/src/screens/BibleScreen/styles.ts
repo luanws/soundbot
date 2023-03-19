@@ -8,8 +8,13 @@ export const Container = styled(View)`
     flex: 1;
 `
 
-export const ContentContainer = styled(ScrollView)`
+export const ContentScroll = styled(ScrollView)`
     flex: 1;
+`
+
+export const ContentContainer = styled(View)`
+    flex: 1;
+    margin-bottom: 80px;
 `
 
 export const BibleTextContainer = styled(View)`
@@ -17,11 +22,13 @@ export const BibleTextContainer = styled(View)`
     background-color: ${({ theme }) => theme.colors.successContainer};
     border-radius: 4px;
     margin: 0px 16px;
+    margin-bottom: 8px;
 `
 
 export const PreviewWebViewContainer = styled(View)`
     height: ${width * (3 / 4)}px;
     overflow: hidden;
+    margin-bottom: 8px;
 `
 
 export const PreviewWebView = styled(WebView)`
@@ -43,7 +50,7 @@ export const WarningContainer = styled(View)`
     background-color: ${({ theme }) => theme.colors.warningContainer};
     border-radius: 4px;
     margin: 0px 16px;
-    margin-top: 8px;
+    margin-bottom: 8px;
 `
 
 export const WarningText = styled(Text)`
