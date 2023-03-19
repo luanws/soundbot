@@ -5,7 +5,7 @@ import SwitchLabel from '../../components/SwitchLabel'
 import { useSettings } from '../../hooks/settings'
 import { BibleVerseDisplaySettings } from '../../models/bible-verse-display-settings'
 import { AppStackParamList } from '../../routes/app.routes'
-import Storage from '../../utils/storage'
+import { BibleVerseDisplaySettingsService } from '../../services/bible-verse-display-settings'
 import { PaddingHorizontalContainer, Scroll } from './styles'
 
 const SettingsScreen: React.FC = () => {
@@ -16,7 +16,7 @@ const SettingsScreen: React.FC = () => {
   const [bibleVerseDisplaySettings, setBibleVerseDisplaySettings] = useState<BibleVerseDisplaySettings>({})
 
   useFocusEffect(useCallback(() => {
-    Storage.get('bible_verse_display_settings').then(displaySettings => {
+    BibleVerseDisplaySettingsService.getDisplaySettings().then(displaySettings => {
       setBibleVerseDisplaySettings(displaySettings || {})
     })
   }, []))

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import CustomBibleVersePreview from '../../components/Bible/CustomBibleVersePreview'
 import FloatActionButton from '../../components/FloatActionButton'
 import SliderInput from '../../components/FormComponents/SliderInput'
-import Storage from '../../utils/storage'
+import { BibleVerseDisplaySettingsService } from '../../services/bible-verse-display-settings'
 import { generalPreset, presets } from './presets'
 import { Container, NavigationButton, NavigationButtonIcon, NavigationButtonsContainer, PresetContainer, PresetName } from './styles'
 
@@ -23,14 +23,14 @@ const BibleVerseDisplaySettingsScreen: React.FC = () => {
   }, [presetName])
 
   async function updateDisplaySettings() {
-    const displaySettings = await Storage.get('bible_verse_display_settings')
+    const displaySettings = await BibleVerseDisplaySettingsService.getDisplaySettings()
     if (displaySettings) {
       setDisplaySettings(displaySettings)
     }
   }
 
   async function saveDisplaySettings() {
-    Storage.set('bible_verse_display_settings', displaySettings)
+    BibleVerseDisplaySettingsService.saveDisplaySettings(displaySettings)
     navigation.goBack()
   }
 

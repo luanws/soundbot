@@ -12,8 +12,12 @@ export namespace BibleVerseDisplaySettingsService {
     }
 
     export async function getDisplaySettings(): Promise<BibleVerseDisplaySettings> {
-        const displaySettings = await Storage.get<BibleVerseDisplaySettings>('bible_verse_display_settings')
+        const displaySettings = await Storage.get<BibleVerseDisplaySettings>('bible-verse-display-settings')
         return { ...defaultBibleVerseDisplaySettings, ...displaySettings }
+    }
+
+    export async function saveDisplaySettings(displaySettings: BibleVerseDisplaySettings): Promise<void> {
+        await Storage.set('bible-verse-display-settings', displaySettings)
     }
 
     export function makeBibleVerseHTML(text: string, reference: string, props?: BibleVerseDisplaySettings): string {
