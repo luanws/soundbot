@@ -28,7 +28,9 @@ const AppRoutes: React.FC = () => {
       }}
     >
       <App.Screen component={MainRoutes} name="Main" options={{ headerShown: false }} />
-      <App.Screen component={BibleVerseDisplaySettingsScreen} name="BibleVerseDisplaySettings" />
+      <App.Screen component={BibleVerseDisplaySettingsScreen} name="BibleVerseDisplaySettings"
+        options={{ title: 'Exibição de verso bíblico' }}
+      />
     </App.Navigator>
   )
 }

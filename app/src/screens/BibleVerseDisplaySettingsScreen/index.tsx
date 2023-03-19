@@ -1,76 +1,68 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import React, { useState } from 'react'
 import CustomBibleVersePreview from '../../components/Bible/CustomBibleVersePreview'
-import { BibleVerseDisplaySettings } from '../../models/bible-verse-display-settings'
+import FloatActionButton from '../../components/FloatActionButton'
 import Storage from '../../utils/storage'
-import { Container, PresetContainer, Scroll } from './styles'
-
-const generalPreset: BibleVerseDisplaySettings = {
-  fontSize: 32,
-  margin: 64,
-  fontFamily: 'Roboto',
-}
-
-const presets: { [key: string]: BibleVerseDisplaySettings } = {
-  'dark': {
-    backgroundColor: '#000000',
-    textColor: '#ffffff',
-    referenceTextColor: '#ffffff',
-  },
-  'light': {
-    backgroundColor: '#ffffff',
-    textColor: '#000000',
-    referenceTextColor: '#000000',
-  },
-  'gruvbox': {
-    backgroundColor: '#282828',
-    textColor: '#ebdbb2',
-    referenceTextColor: '#ebdbb2',
-  },
-  // 'gruvbox_dark': {
-  //   backgroundColor: '#1d2021',
-  //   textColor: '#ebdbb2',
-  //   referenceTextColor: '#ebdbb2',
-  // },
-}
+import { generalPreset, presets } from './presets'
+import { Container, NavigationButton, NavigationButtonIcon, NavigationButtonsContainer, PresetContainer, PresetName } from './styles'
 
 const BibleVerseDisplaySettingsScreen: React.FC = () => {
   const navigation = useNavigation()
 
-  async function saveDisplaySettings(displaySettings: BibleVerseDisplaySettings) {
+  const [presetName, setPresetName] = useState<string>(Object.keys(presets)[0])
+  const displaySettings = { ...generalPreset, ...presets[presetName] }
+
+  async function saveDisplaySettings() {
     Storage.set('bible_verse_display_settings', displaySettings)
     navigation.goBack()
   }
 
+  function handleNextPreset() {
+    const presetNames = Object.keys(presets)
+    const presetIndex = presetNames.indexOf(presetName)
+    const nextPresetName = presetNames[presetIndex + 1] || presetNames[0]
+    setPresetName(nextPresetName)
+  }
+
+  function handlePreviousPreset() {
+    const presetNames = Object.keys(presets)
+    const presetIndex = presetNames.indexOf(presetName)
+    const previousPresetName = presetNames[presetIndex - 1] || presetNames[presetNames.length - 1]
+    setPresetName(previousPresetName)
+  }
+
   return (
-    <Scroll>
+    <>
       <Container>
-        {Object.keys(presets).map((presetName) => {
-          const displaySettings = { ...generalPreset, ...presets[presetName] }
-
-          function handlePresetPress() {
-            saveDisplaySettings(displaySettings)
-          }
-
-          return (
-            <PresetContainer key={presetName}>
-              <CustomBibleVersePreview
-                bibleVerse={{
-                  text: 'Este é um texto fictício para testar a visualização customizada de versículos bíblicos.',
-                  reference: {
-                    bookName: 'Livro',
-                    chapterNumber: 0,
-                    verseNumber: 0
-                  }
-                }}
-                onPress={() => handlePresetPress()}
-                displaySettings={displaySettings}
-              />
-            </PresetContainer>
-          )
-        })}
-      </Container>
-    </Scroll>
+        <PresetContainer>
+          <PresetName>{presetName}</PresetName>
+          <CustomBibleVersePreview
+            bibleVerse={{
+              text: 'Este é um texto fictício para testar a visualização customizada de versículos bíblicos.',
+              reference: {
+                bookName: 'Livro',
+                chapterNumber: 0,
+                verseNumber: 0
+              }
+            }}
+            displaySettings={displaySettings}
+          />
+        </PresetContainer>
+        <NavigationButtonsContainer>
+          <NavigationButton activeOpacity={0.7} onPress={handlePreviousPreset}>
+            <NavigationButtonIcon name='navigate-before' />
+          </NavigationButton>
+          <NavigationButton activeOpacity={0.7} onPress={handleNextPreset}>
+            <NavigationButtonIcon name='navigate-next' />
+          </NavigationButton>
+        </NavigationButtonsContainer>
+      </Container >
+      <FloatActionButton
+        icon='MaterialIcons/check'
+        onPress={saveDisplaySettings}
+        position='right'
+      />
+    </>
   )
 }
 
