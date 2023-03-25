@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react'
 import VideoCell from '../../Cell/VideoCell'
 import GestureModal, { GestureModalRef } from '../../GestureModal'
 import { PlayModalContainer, PlayModalText } from './styles'
+import VolumeManager from './VolumeManager'
 
 export interface PlayerModalRef extends GestureModalRef {
 }
@@ -26,6 +27,7 @@ const PlayerModal: React.ForwardRefRenderFunction<PlayerModalRef, Props> = (prop
       {playingVideoFilename && (
         <PlayModalContainer>
           <PlayModalText>Reproduzindo</PlayModalText>
+          <VolumeManager />
           <VideoCell filename={playingVideoFilename} playing onPress={stopVideo} />
         </PlayModalContainer>
       )}

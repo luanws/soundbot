@@ -24,4 +24,8 @@ export namespace CommandService {
     export async function hideHTML(): Promise<void> {
         await api.post('/command/hide_html')
     }
+
+    export async function setVolume(volume: number): Promise<void> {
+        await api.post('/command/set_volume', { volume })
+    }
 }

@@ -4,7 +4,7 @@ import { useTheme } from '../../../hooks/theme'
 import { Container, LabelText, TextsContainer, ValueText } from './styles'
 
 interface Props {
-  label: string
+  label?: string
   value: number
   onValueChange(value: number): void
   formatValue?(value: number): string
@@ -21,7 +21,7 @@ const SliderInput: React.FC<Props> = (props) => {
   return (
     <Container>
       <TextsContainer>
-        <LabelText>{label}</LabelText>
+        {label !== undefined && <LabelText>{label}</LabelText>}
         {formatValue && <ValueText>{formatValue(value)}</ValueText>}
       </TextsContainer>
       <Slider
