@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import HymnCell from '../../components/Cell/HymnCell'
-import GestureModal, { GestureModalRef } from '../../components/GestureModal'
 import HymnList from '../../components/List/HymnList'
 import Loading from '../../components/Loading'
+import PlayerModal, { PlayerModalRef } from '../../components/Modal/PlayerModal'
 import SearchView from '../../components/Search/SearchView'
 import { CommandService } from '../../services/command'
 import { HymnService } from '../../services/hymn'
-import { PlayModalContainer, PlayModalText } from './styles'
 
 
 const HymnbookScreen: React.FC = (props) => {
-  const playerModalRef = useRef<GestureModalRef>(null)
+  const playerModalRef = useRef<PlayerModalRef>(null)
 
   const [hymns, setHymns] = useState<string[]>([])
   const [playingHymn, setPlayingHymn] = useState<string | null>(null)
@@ -68,21 +67,12 @@ const HymnbookScreen: React.FC = (props) => {
           onClear={() => setSearchText('')}
         />
       ) : <Loading />}
-      <GestureModal
+      <PlayerModal
         ref={playerModalRef}
-        onClose={handleStopHymn}
-        closeOnOverlayTap={false}
-        onBackButtonPress={() => true}
-        panGestureEnabled={false}
-        withHandle={false}
-      >
-        {playingHymn && (
-          <PlayModalContainer>
-            <PlayModalText>Reproduzindo</PlayModalText>
-            <HymnCell hymn={playingHymn} playing onPress={handleStopHymn} />
-          </PlayModalContainer>
-        )}
-      </GestureModal>
+        playingVideoFilename={playingHymn}
+        stopVideo={handleStopHymn}
+        renderVideoCell={(filename) => <HymnCell hymn={filename} playing onPress={handleStopHymn} />}
+      />
     </>
   )
 }

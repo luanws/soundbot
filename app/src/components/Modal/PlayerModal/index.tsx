@@ -10,10 +10,11 @@ export interface PlayerModalRef extends GestureModalRef {
 interface Props {
   stopVideo: () => void
   playingVideoFilename: string | null
+  renderVideoCell?: (filename: string) => React.ReactNode
 }
 
 const PlayerModal: React.ForwardRefRenderFunction<PlayerModalRef, Props> = (props, ref) => {
-  const { playingVideoFilename, stopVideo } = props
+  const { playingVideoFilename, stopVideo, renderVideoCell } = props
 
   return (
     <GestureModal
@@ -28,7 +29,9 @@ const PlayerModal: React.ForwardRefRenderFunction<PlayerModalRef, Props> = (prop
         <PlayModalContainer>
           <PlayModalText>Reproduzindo</PlayModalText>
           <VolumeManager />
-          <VideoCell filename={playingVideoFilename} playing onPress={stopVideo} />
+          {renderVideoCell ? renderVideoCell(playingVideoFilename) : (
+            <VideoCell filename={playingVideoFilename} playing onPress={stopVideo} />
+          )}
         </PlayModalContainer>
       )}
     </GestureModal>
