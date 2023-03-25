@@ -12,7 +12,7 @@ from version import version
 
 application_name = 'Soundbot'
 
-dist_path = os.path.join('dist')
+dist_path = os.path.join('dist', version)
 portable_path = os.path.join(dist_path, f'{application_name} {version} portable', application_name)
 zip_path = os.path.join(dist_path, f'{application_name} {version}')
 
@@ -86,10 +86,10 @@ def create_setup():
 
 def setup():
     try:
-        remove_path(portable_path)
-        run_pyinstaller(application_name, portable_path)
-        copy_assets(assets_to_copy)
-        make_zip(zip_path, os.path.join(portable_path, '..'))
+        # remove_path(portable_path)
+        # run_pyinstaller(application_name, portable_path)
+        # copy_assets(assets_to_copy)
+        # make_zip(zip_path, os.path.join(portable_path, '..'))
         create_setup()
     except:
         traceback.print_exc()

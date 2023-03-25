@@ -27,7 +27,7 @@ Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 OutputBaseFilename={#MyAppName} {#MyAppVersion} Setup
-OutputDir="../../dist"
+OutputDir="../../dist/{#MyAppVersion}"
 SetupIconFile="../../icon.ico"
 
 [Languages]
@@ -37,7 +37,7 @@ Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\dist\{#MyAppName} {#MyAppVersion} portable\{#MyAppName}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\dist\{#MyAppVersion}\{#MyAppName} {#MyAppVersion} portable\{#MyAppName}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
