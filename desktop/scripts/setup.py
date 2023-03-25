@@ -86,10 +86,10 @@ def create_setup():
 
 def setup():
     try:
-        # remove_path(portable_path)
-        # run_pyinstaller(application_name, portable_path)
-        # copy_assets(assets_to_copy)
-        # make_zip(zip_path, os.path.join(portable_path, '..'))
+        remove_path(portable_path)
+        run_pyinstaller(application_name, portable_path)
+        copy_assets(assets_to_copy)
+        make_zip(zip_path, os.path.join(portable_path, '..'))
         create_setup()
     except:
         traceback.print_exc()
