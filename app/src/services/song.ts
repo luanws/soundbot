@@ -11,7 +11,7 @@ export namespace SongService {
     export function searchSongs(fileTreeArray: FileTree[], searchText: string): FileTree[] {
         return FileTreeUtils.filter(fileTreeArray, fileTree => {
             const isFile = fileTree.type === 'file'
-            const isLike = fileTree.name.like(searchText)
+            const isLike = fileTree.name.includesLike(searchText)
             return isFile && isLike
         })
     }

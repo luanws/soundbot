@@ -1,8 +1,10 @@
 declare global {
     interface String {
         digits(): string
-        replaceDiacritics(): string
-        like(s: string): boolean
+        removeDiacritics(): string
+        includesLike(s: string): boolean
+        removeSpellingPoints(): string
+        simplify(): string
     }
 }
 
@@ -10,12 +12,24 @@ String.prototype.digits = function () {
     return this.match(/\d/g)?.join('') || ''
 }
 
-String.prototype.replaceDiacritics = function () {
+String.prototype.removeDiacritics = function () {
     return this.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
 }
 
-String.prototype.like = function (s: string) {
-    return this.replaceDiacritics().toLowerCase().trim().includes(s.replaceDiacritics().toLowerCase().trim())
+String.prototype.removeSpellingPoints = function () {
+    return this.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
+}
+
+String.prototype.simplify = function () {
+    return this
+        .removeDiacritics()
+        .removeSpellingPoints()
+        .toLowerCase()
+        .trim()
+}
+
+String.prototype.includesLike = function (s: string) {
+    return this.simplify().includes(s.simplify())
 }
 
 export { }

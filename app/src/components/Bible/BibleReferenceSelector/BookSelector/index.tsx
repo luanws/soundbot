@@ -15,7 +15,7 @@ const BookSelector: React.FC<Props> = (props) => {
 
   function filterBookNames(searchText: string) {
     const filteredBookNames = bookNames.filter((bookName) => {
-      return bookName.like(searchText)
+      return bookName.includesLike(searchText)
     })
     setFilteredBookNames(filteredBookNames)
   }

@@ -32,7 +32,7 @@ const HymnbookScreen: React.FC = (props) => {
 
   function filterHymns(hymns: string[], searchText: string): string[] {
     return hymns.filter((hymn) => {
-      return hymn.like(searchText)
+      return hymn.includesLike(searchText)
     })
   }
 
