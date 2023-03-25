@@ -2,10 +2,12 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Soundbot"
-#define MyAppVersion "1.2.0"
+#define MyAppVersion "1.2.1"
 #define MyAppPublisher "luanws"
 #define MyAppURL "https://github.com/luanws/soundbot"
 #define MyAppExeName "Soundbot.exe"
+
+#define KLiteCodecPack "K-Lite_Codec_Pack_1750_Basic.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -47,3 +49,8 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Files]
+Source: "{#KLiteCodecPack}"; DestDir: "{tmp}"; Flags: deleteafterinstall
+
+[Run]
+Filename: "{tmp}\{#KLiteCodecPack}"; Parameters: "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"; StatusMsg: "Instalando o K-Lite Codec Pack..."; Flags: waituntilterminated shellexec runhidden
