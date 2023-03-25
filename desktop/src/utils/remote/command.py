@@ -8,3 +8,4 @@ class Command(Enum):
     STOP_VIDEO = 'stop_video'
     SHOW_HTML = 'show_html'
     HIDE_HTML = 'hide_html'
+    SET_VOLUME = 'set_volume'
